@@ -1,4 +1,24 @@
 import type { ContentBlock } from '../content/types'
+import type { ReactNode } from 'react'
+
+function renderRichText(text: string): ReactNode[] {
+  return text.split(/(\[[^\]]+\]\([^)]+\))/g).map((part, index) => {
+    const match = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(part)
+    if (!match) return part
+
+    return (
+      <a
+        key={index}
+        className="inline-link"
+        href={match[2]}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {match[1]}
+      </a>
+    )
+  })
+}
 
 export function ContentBlocks({ blocks }: { blocks: ContentBlock[] }) {
   return (
@@ -12,7 +32,9 @@ export function ContentBlocks({ blocks }: { blocks: ContentBlock[] }) {
               .split(/\n\s*\n/)
               .filter(Boolean)
               .map((paragraph, paragraphIndex) => (
-                <p key={`${index}-${paragraphIndex}`}>{paragraph.trim()}</p>
+                <p key={`${index}-${paragraphIndex}`}>
+                  {renderRichText(paragraph.trim())}
+                </p>
               ))
           case 'bullets':
             return (
@@ -24,12 +46,25 @@ export function ContentBlocks({ blocks }: { blocks: ContentBlock[] }) {
             )
           case 'image':
             return (
-              <img
+              <figure
                 key={index}
-                className="detail-image"
-                src={block.src}
-                alt={block.alt ?? ''}
-              />
+                className={
+                  block.size === 'sm'
+                    ? 'detail-figure detail-figure--sm'
+                    : 'detail-figure'
+                }
+              >
+                <img
+                  className="detail-image"
+                  src={block.src}
+                  alt={block.alt ?? ''}
+                />
+                {block.caption && (
+                  <figcaption className="detail-caption">
+                    {block.caption}
+                  </figcaption>
+                )}
+              </figure>
             )
           case 'video':
             return (
@@ -42,6 +77,28 @@ export function ContentBlocks({ blocks }: { blocks: ContentBlock[] }) {
                 preload="metadata"
               />
             )
+          case 'link':
+            return (
+              <a
+                key={index}
+                className="detail-link"
+                href={block.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="detail-link-title">{block.title}</span>
+                {block.description && (
+                  <span className="detail-link-description">
+                    {block.description}
+                  </span>
+                )}
+                <span className="detail-link-domain">
+                  {new URL(block.url).hostname}
+                </span>
+              </a>
+            )
+          case 'divider':
+            return <hr key={index} className="detail-divider" />
         }
       })}
     </div>

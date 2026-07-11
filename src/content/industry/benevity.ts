@@ -19,7 +19,7 @@ export const benevity: PortfolioItem = {
     { type: 'video', src: demoVideo },
     {
       type: 'paragraph',
-      text: 'I worked with a team of 5 to build a multi-agent impact story generation platform for Benevity, a company focused on helping organizations create social impact. The project aimed to address a challenge: donors often lose visibility into how their contributions create real-world impact after making a donation. To solve this, we built a platform that fetches news, generates impact stories, and distributes them to donors, allowing them to stay connected with the causes they support.',
+      text: 'I worked with a team of 5 to build a multi-agent impact story generation platform for [Benevity](https://www.benevity.com), a company focused on helping organizations create social impact. The project aimed to address a challenge: donors often lose visibility into how their contributions create real-world impact after making a donation. To solve this, we built a platform that fetches news, generates impact stories, and distributes them to donors, allowing them to stay connected with the causes they support.',
     },
     {
       type: 'heading',
@@ -89,6 +89,7 @@ Since AI-generated content can sometimes contain hallucinations, I designed the 
         'Implemented GitHub Actions CI/CD pipelines for automated testing and deployments.',
       ],
     },
+    { type: 'divider' },
     {
       type: 'heading',
       text: 'TL;DR',

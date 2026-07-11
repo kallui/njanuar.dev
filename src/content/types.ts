@@ -2,8 +2,15 @@ export type ContentBlock =
   | { type: 'heading'; text: string }
   | { type: 'paragraph'; text: string }
   | { type: 'bullets'; items: string[] }
-  | { type: 'image'; src: string; alt?: string }
+  | { type: 'image'; src: string; alt?: string; caption?: string; size?: 'sm' }
   | { type: 'video'; src: string }
+  | {
+      type: 'link'
+      url: string
+      title: string
+      description?: string
+    }
+  | { type: 'divider' }
 
 export type PortfolioItem = {
   slug: string

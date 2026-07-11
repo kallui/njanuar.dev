@@ -19,13 +19,13 @@ export function Home() {
       </header>
 
       <section>
-        <h2>Work</h2>
-        <WorkList items={work} basePath="/work" />
+        <h2>Industry Project</h2>
+        <WorkList items={industryWork} basePath="/industry" />
       </section>
 
       <section>
-        <h2>Industry Project</h2>
-        <WorkList items={industryWork} basePath="/industry" />
+        <h2>Work</h2>
+        <WorkList items={work} basePath="/work" />
       </section>
 
       <section>

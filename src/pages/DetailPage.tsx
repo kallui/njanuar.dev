@@ -39,14 +39,18 @@ export function DetailPage() {
             <h1>{item.name}</h1>
           )}
         </div>
-        <div className="detail-roles">
-          {item.roles.map((role) => (
-            <p key={`${role.title}-${role.years}`}>
-              {role.title}
-              <span className="detail-years"> · {role.years}</span>
-            </p>
-          ))}
-        </div>
+        {item.roles.length === 1 && (
+          <div className="detail-roles">
+            {item.roles.map((role) => (
+              <p key={`${role.title}-${role.years}`}>
+                {role.title}
+                {role.years && (
+                  <span className="detail-years"> · {role.years}</span>
+                )}
+              </p>
+            ))}
+          </div>
+        )}
       </header>
 
       {item.summary && <p className="detail-summary">{item.summary}</p>}
