@@ -6,6 +6,11 @@
   --border: #2e303a;
 }
 
+::selection {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--text-h);
+}
+
 body {
   margin: 0;
   font-family:
@@ -67,8 +72,31 @@ header {
   margin: 0;
 }
 
+.detail-title-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-h);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.2s ease 0.12s;
+}
+
+.detail-title-link:hover {
+  text-decoration-color: currentColor;
+}
+
+.detail-roles {
+  margin-top: 4px;
+}
+
 .detail-roles p {
   margin: 0;
+}
+
+.detail-roles p + p {
+  margin-top: 4px;
 }
 
 .detail-years {
@@ -100,6 +128,13 @@ header {
   display: block;
   width: 100%;
   border-radius: 6px;
+}
+
+.detail-video {
+  display: block;
+  width: 100%;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 h1 {

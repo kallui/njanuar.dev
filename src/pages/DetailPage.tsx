@@ -12,7 +12,7 @@ export function DetailPage() {
         <Link to="/" className="back-link">
           ← Back
         </Link>
-        <p>Not found.</p>
+        {/* <p>Not found.</p> */}
       </main>
     )
   }
@@ -26,7 +26,18 @@ export function DetailPage() {
       <header className="detail-header">
         <div className="detail-title">
           {item.logo && <img className="work-logo" src={item.logo} alt="" />}
-          <h1>{item.name}</h1>
+          {item.url ? (
+            <a
+              className="detail-title-link"
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <h1>{item.name}</h1>
+            </a>
+          ) : (
+            <h1>{item.name}</h1>
+          )}
         </div>
         <div className="detail-roles">
           {item.roles.map((role) => (

@@ -5,5 +5,6 @@ export const greenline: PortfolioItem = {
   slug: 'greenline',
   name: 'Greenline',
   logo: greenlineLogo,
+  url: 'https://getgreenline.co',
   roles: [{ title: 'Role Title', years: '2021 - 2022' }],
 }

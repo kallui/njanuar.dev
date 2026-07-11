@@ -14,7 +14,7 @@ export function Home() {
           <br />
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.{' '}
-          <a href="#">Example link</a>.
+          <a href="#">Example link</a>. TODO WHERE TO ADD ABOUT DEVOPS interest
         </p>
       </header>
 

@@ -8,7 +8,12 @@ export function ContentBlocks({ blocks }: { blocks: ContentBlock[] }) {
           case 'heading':
             return <h2 key={index}>{block.text}</h2>
           case 'paragraph':
-            return <p key={index}>{block.text}</p>
+            return block.text
+              .split(/\n\s*\n/)
+              .filter(Boolean)
+              .map((paragraph, paragraphIndex) => (
+                <p key={`${index}-${paragraphIndex}`}>{paragraph.trim()}</p>
+              ))
           case 'bullets':
             return (
               <ul key={index} className="detail-bullets">
@@ -24,6 +29,17 @@ export function ContentBlocks({ blocks }: { blocks: ContentBlock[] }) {
                 className="detail-image"
                 src={block.src}
                 alt={block.alt ?? ''}
+              />
+            )
+          case 'video':
+            return (
+              <video
+                key={index}
+                className="detail-video"
+                src={block.src}
+                controls
+                playsInline
+                preload="metadata"
               />
             )
         }

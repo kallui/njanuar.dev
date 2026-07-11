@@ -8,11 +8,11 @@ export const worksafebc: PortfolioItem = {
   slug: 'worksafebc',
   name: 'WorkSafeBC',
   logo: worksafebcLogo,
+  url: 'https://www.worksafebc.com',
   roles: [
-    { title: 'Software Developer Co-op', years: 'Jan 2025 - Apr 2025' },
+    { title: 'Software Developer Co-op', years: 'Sep 2025 - Dec 2025' },
     { title: 'Quality Assurance Co-op', years: 'Sep 2024 - Dec 2024' },
   ],
-  summary: 'Software Developer Co-op at WorkSafeBC (Richmond, BC).',
 
   // Mix these blocks in any order:
   // { type: 'heading', text: '...' }
@@ -22,19 +22,22 @@ export const worksafebc: PortfolioItem = {
   content: [
     {
       type: 'heading',
-      text: 'What I worked on',
+      text: 'Software Developer Co-op · Sep - Dec 2025',
     },
     {
       type: 'paragraph',
-      text: 'Focused on developer tooling, CI/CD, and improving how teams ship Angular and .NET blueprints.',
+      text: `
+      I worked with the Common Engineering team, a service team responsible for improving developer experience across the organization. The team builds shared tools, templates, and standardized engineering pratices that help development teams collaborate effectively and adopt modern software development practices.
+      
+      I cont
+      
+      TL;DR
+      
+      `,
     },
     {
       type: 'bullets',
-      items: [
-        'Designed and implemented custom GitHub Copilot instruction files for Angular to align AI-generated code with internal UI/UX standards. Integrated changes into shared blueprint templates and presented a demo to engineering leadership.',
-        'Fixed and updated CI/CD pipelines by adding missing configuration files and supporting the release of updated Angular and .NET blueprint templates through the self-service portal.',
-        'Led a dependency tracking initiative by interviewing stakeholders, evaluating various approaches, presenting in monthly project updates, and delivering a final recommendation with risk mitigation and implementation roadmap.',
-      ],
+      items: ['Built '],
     },
     {
       type: 'heading',
