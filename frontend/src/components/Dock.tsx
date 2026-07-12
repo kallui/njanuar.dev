@@ -6,6 +6,8 @@ export function Dock() {
         target="_blank"
         rel="noreferrer"
         aria-label="LinkedIn"
+        className="has-tooltip"
+        data-tooltip="LinkedIn"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path
@@ -19,6 +21,8 @@ export function Dock() {
         target="_blank"
         rel="noreferrer"
         aria-label="GitHub"
+        className="has-tooltip"
+        data-tooltip="GitHub"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path
@@ -27,7 +31,12 @@ export function Dock() {
           />
         </svg>
       </a>
-      <a href="mailto:hello@njanuar.dev" aria-label="Email">
+      <a
+        href="mailto:hello@njanuar.dev"
+        aria-label="Email"
+        className="has-tooltip"
+        data-tooltip="Email"
+      >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path
             fill="currentColor"

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { WorkList } from '../components/WorkList'
 import { VancouverClock } from '../components/VancouverClock'
 import { work, industryWork, projects } from '../content'
@@ -13,14 +14,8 @@ export function Home() {
         </div>
         <h1>Nicholas Januar</h1>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.{' '}
-          <a href="#">Example link</a>.
-          <br />
-          <br />
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.{' '}
-          <a href="#">Example link</a>. TODO WHERE TO ADD ABOUT DEVOPS interest
+          Hi, you can call me Niko. I like making things that make my life a
+          little easier.
         </p>
       </header>
 
@@ -37,6 +32,29 @@ export function Home() {
       <section>
         <h2>Featured Projects</h2>
         <WorkList items={projects} basePath="/projects" />
+      </section>
+
+      <section>
+        <h2>Current rabbit hole</h2>
+        <p>
+          Currently exploring the world of DevOps and cloud. Setting up Linux
+          servers, writing bash scripts, building CI/CD pipelines, and learning
+          container orchestration.
+        </p>
+      </section>
+
+      <section>
+        <h2>Doodle</h2>
+        <p>
+          You've seen my little corner of the internet.
+          <br />
+          Now leave a little piece of yours.
+        </p>
+        <p>
+          <Link to="/doodle" className="inline-link">
+            Leave a doodle
+          </Link>
+        </p>
       </section>
     </main>
   )
