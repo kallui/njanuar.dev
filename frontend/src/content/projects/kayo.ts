@@ -10,8 +10,9 @@ export const kayo: PortfolioItem = {
   roles: [
     {
       title:
-        'A computer vision security app that watches your belongings using object detection and real-time alerts.',
-      years: 'Jan 2024',
+        'Watch your belongings using object detection and real-time alerts.',
+      years: '2024',
+      dates: 'Jan 2024',
     },
   ],
   summary:

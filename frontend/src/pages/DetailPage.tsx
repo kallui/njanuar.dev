@@ -42,10 +42,10 @@ export function DetailPage() {
         {item.roles.length === 1 && (
           <div className="detail-roles">
             {item.roles.map((role) => (
-              <p key={`${role.title}-${role.years}`}>
+              <p key={`${role.title}-${role.dates}`}>
                 {role.title}
-                {role.years && (
-                  <span className="detail-years"> · {role.years}</span>
+                {role.dates && (
+                  <span className="detail-years"> · {role.dates}</span>
                 )}
               </p>
             ))}

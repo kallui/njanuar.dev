@@ -13,9 +13,9 @@ export const ridendine: PortfolioItem = {
   url: 'https://ridendine.app',
   roles: [
     {
-      title:
-        'A transit-friendly food discovery app that helps commuters find restaurants along their route.',
-      years: 'Jan 2026 - Present',
+      title: 'Find food options along your transit route',
+      years: 'Present',
+      dates: 'Jan 2026 - Present',
     },
   ],
   content: [

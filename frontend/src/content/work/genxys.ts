@@ -9,7 +9,8 @@ export const genxys: PortfolioItem = {
   roles: [
     {
       title: 'Bioinformatics & Implementation Support Co-op',
-      years: 'Mar - Aug 2024',
+      years: '2024',
+      dates: 'Mar - Aug 2024',
     },
   ],
   content: [

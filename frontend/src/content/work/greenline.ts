@@ -7,7 +7,11 @@ export const greenline: PortfolioItem = {
   logo: greenlineLogo,
   url: 'https://getgreenline.co',
   roles: [
-    { title: 'Software Developer Co-op', years: 'Jan - Apr 2023' },
+    {
+      title: 'Software Developer Co-op',
+      years: '2023',
+      dates: 'Jan - Apr 2023',
+    },
   ],
   content: [
     {

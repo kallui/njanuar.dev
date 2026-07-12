@@ -12,7 +12,8 @@ export const benevity: PortfolioItem = {
   roles: [
     {
       title: 'Multi-Agent Impact Story Generation Platform',
-      years: 'Jan - Apr 2026',
+      years: '2026',
+      dates: 'Jan - Apr 2026',
     },
   ],
   content: [

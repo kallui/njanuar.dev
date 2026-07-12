@@ -21,7 +21,7 @@ export type PortfolioItem = {
   name: string
   logo?: string
   url?: string
-  roles: { title: string; years: string }[]
+  roles: { title: string; years: string; dates: string }[]
   summary?: string
   content?: ContentBlock[]
 }

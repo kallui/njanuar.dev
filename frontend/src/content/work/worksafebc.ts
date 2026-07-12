@@ -8,8 +8,16 @@ export const worksafebc: PortfolioItem = {
   logo: worksafebcLogo,
   url: 'https://www.worksafebc.com',
   roles: [
-    { title: 'Software Developer Co-op', years: 'Sep - Dec 2025' },
-    { title: 'Quality Assurance Co-op', years: 'Sep - Dec 2024' },
+    {
+      title: 'Software Developer Co-op',
+      years: '2025',
+      dates: 'Sep - Dec 2025',
+    },
+    {
+      title: 'Quality Assurance Co-op',
+      years: '2024',
+      dates: 'Sep - Dec 2024',
+    },
   ],
   content: [
     {

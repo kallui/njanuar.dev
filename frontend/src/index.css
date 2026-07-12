@@ -22,7 +22,7 @@ body {
   color: var(--text);
   background-color: var(--bg);
   background-image: radial-gradient(
-    rgba(255, 255, 255, 0.05) 1px,
+    rgba(255, 255, 255, 0.08) 1px,
     transparent 1px
   );
   background-size: 30px 30px;
@@ -43,6 +43,43 @@ main {
 
 header {
   margin-bottom: 40px;
+}
+
+.home-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.home-logo {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+
+header > h1 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.home-clock {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  line-height: 18px;
+  color: rgba(176, 176, 176, 0.45);
+}
+
+@media (max-width: 600px) {
+  .home-clock {
+    font-size: 11px;
+    line-height: 16px;
+  }
 }
 
 .back-link {

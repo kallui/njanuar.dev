@@ -1,10 +1,16 @@
 import { WorkList } from '../components/WorkList'
+import { VancouverClock } from '../components/VancouverClock'
 import { work, industryWork, projects } from '../content'
+import kikiLogo from '../assets/pictures/kiki_logo.svg'
 
 export function Home() {
   return (
     <main>
       <header>
+        <div className="home-title">
+          <img className="home-logo" src={kikiLogo} alt="" />
+          <VancouverClock />
+        </div>
         <h1>Nicholas Januar</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
