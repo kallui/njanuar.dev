@@ -13,6 +13,9 @@ dist
 dist-ssr
 *.local
 
+# Backend uploads (saved doodle PNGs)
+backend/uploads/
+
 # Vite
 .vite
 

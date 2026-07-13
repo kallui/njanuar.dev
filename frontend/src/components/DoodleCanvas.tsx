@@ -317,7 +317,31 @@ export const DoodleCanvas = forwardRef<DoodleCanvasHandle, DoodleCanvasProps>(
         resetHistory()
       },
       isEmpty: () => !hasDrawnRef.current,
-      toDataURL: () => canvasRef.current?.toDataURL('image/png') ?? '',
+      // Export at CSS size (not devicePixelRatio backing store) so saved
+      // PNGs match the on-screen canvas, not a 2× retina bitmap.
+      toDataURL: () => {
+        const canvas = canvasRef.current
+        if (!canvas) return ''
+
+        const rect = canvas.getBoundingClientRect()
+        const width = Math.max(1, Math.round(rect.width))
+        const height = Math.max(1, Math.round(rect.height))
+
+        if (canvas.width === width && canvas.height === height) {
+          return canvas.toDataURL('image/png')
+        }
+
+        const exportCanvas = document.createElement('canvas')
+        exportCanvas.width = width
+        exportCanvas.height = height
+        const exportCtx = exportCanvas.getContext('2d')
+        if (!exportCtx) return canvas.toDataURL('image/png')
+
+        exportCtx.fillStyle = '#ffffff'
+        exportCtx.fillRect(0, 0, width, height)
+        exportCtx.drawImage(canvas, 0, 0, width, height)
+        return exportCanvas.toDataURL('image/png')
+      },
     }))
 
     const getPoint = (event: React.PointerEvent<HTMLCanvasElement>) => {

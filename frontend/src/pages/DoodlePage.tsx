@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   DoodleCanvas,
@@ -7,11 +7,13 @@ import {
 import { generateAnonymousName } from '../utils/anonymousName'
 import { PixelArtAvatar } from '../components/PixelArtAvatar'
 
-type DoodleEntry = {
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8080'
+
+type Doodle = {
   id: string
-  name: string
-  imageDataUrl: string
-  createdAt: number
+  artist: string
+  filename: string
+  created_at: string
 }
 
 type SubmittedMessage = {
@@ -25,7 +27,7 @@ const SUBMITTED_MESSAGES: SubmittedMessage[] = [
     drawAgainMessage: 'Draw again',
   },
   {
-    thanksMessage: 'WOW, that looks amazing! 😮😮😮',
+    thanksMessage: 'take my money 💳💳💥💥',
     drawAgainMessage: 'Draw again',
   },
   {
@@ -54,42 +56,82 @@ function pickSubmittedMessage() {
 
 export function DoodlePage() {
   const canvasRef = useRef<DoodleCanvasHandle>(null)
-  const [name, setName] = useState(() => generateAnonymousName())
-  const [gallery, setGallery] = useState<DoodleEntry[]>([])
-  const [error, setError] = useState('')
+  const [artist, setArtist] = useState(() => generateAnonymousName())
+  const [gallery, setGallery] = useState<Doodle[]>([])
+  const [albumLoading, setAlbumLoading] = useState(true)
+  const [albumError, setAlbumError] = useState('')
+  const [submitError, setSubmitError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [submittedMessage, setSubmittedMessage] =
     useState<SubmittedMessage | null>(null)
   const [canvasKey, setCanvasKey] = useState(0)
 
-  const handleSubmit = () => {
-    if (submitted) return
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadAlbum() {
+      try {
+        const response = await fetch(`${API_BASE}/api/doodles`)
+        if (!response.ok) throw new Error()
+        const doodles = (await response.json()) as Doodle[]
+        if (!cancelled) setGallery(doodles)
+      } catch {
+        if (!cancelled) setAlbumError('Could not load album.')
+      } finally {
+        if (!cancelled) setAlbumLoading(false)
+      }
+    }
+
+    void loadAlbum()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const handleSubmit = async () => {
+    if (submitted || submitting) return
 
     const canvas = canvasRef.current
     if (!canvas || canvas.isEmpty()) {
-      setError('Draw something first.')
+      setSubmitError('Draw something first.')
       return
     }
 
-    const trimmed = name.trim()
-    const finalName = trimmed || generateAnonymousName()
-    const entry: DoodleEntry = {
-      id: crypto.randomUUID(),
-      name: finalName,
-      imageDataUrl: canvas.toDataURL(),
-      createdAt: Date.now(),
-    }
+    const trimmed = artist.trim()
+    const finalArtist = trimmed || generateAnonymousName()
+    const imageDataUrl = canvas.toDataURL()
 
-    setName(finalName)
-    setGallery((prev) => [entry, ...prev])
-    setError('')
-    setSubmittedMessage(pickSubmittedMessage())
-    setSubmitted(true)
+    setSubmitting(true)
+    setSubmitError('')
+    setArtist(finalArtist)
+
+    try {
+      const response = await fetch(`${API_BASE}/api/doodles`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ artist: finalArtist, image: imageDataUrl }),
+      })
+
+      if (!response.ok) {
+        const message = await response.text()
+        throw new Error(message || 'Failed to save doodle.')
+      }
+
+      const saved = (await response.json()) as Doodle
+      setGallery((prev) => [saved, ...prev])
+      setSubmittedMessage(pickSubmittedMessage())
+      setSubmitted(true)
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Failed to save doodle.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleDrawAgain = () => {
-    setName(generateAnonymousName())
-    setError('')
+    setArtist(generateAnonymousName())
+    setSubmitError('')
     setSubmittedMessage(null)
     setSubmitted(false)
     setCanvasKey((key) => key + 1)
@@ -109,17 +151,17 @@ export function DoodlePage() {
       <DoodleCanvas key={canvasKey} ref={canvasRef} locked={submitted} />
 
       <div className="doodle-form">
-        <label className="doodle-name-field" htmlFor="doodle-name">
+        <label className="doodle-name-field" htmlFor="doodle-artist">
           <span>Name</span>
           <input
-            id="doodle-name"
+            id="doodle-artist"
             type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
+            value={artist}
+            onChange={(event) => setArtist(event.target.value)}
             placeholder="little-elephant23"
             maxLength={40}
             autoComplete="nickname"
-            disabled={submitted}
+            disabled={submitted || submitting}
             readOnly={submitted}
           />
         </label>
@@ -129,14 +171,14 @@ export function DoodlePage() {
             type="button"
             className="doodle-btn doodle-btn--primary"
             onClick={handleSubmit}
-            disabled={submitted}
+            disabled={submitted || submitting}
           >
-            {submitted ? 'Submitted' : 'Submit'}
+            {submitted ? 'Submitted' : submitting ? 'Submitting…' : 'Submit'}
           </button>
         </div>
       </div>
 
-      {error && <p className="doodle-error">{error}</p>}
+      {submitError && <p className="doodle-error">{submitError}</p>}
       {submitted && submittedMessage && (
         <p className="doodle-submitted-note">
           {submittedMessage.thanksMessage}{' '}
@@ -153,7 +195,11 @@ export function DoodlePage() {
 
       <section className="doodle-gallery">
         <h2>Album</h2>
-        {gallery.length === 0 ? (
+        {albumLoading ? (
+          <p>Loading album…</p>
+        ) : albumError ? (
+          <p className="doodle-error">{albumError}</p>
+        ) : gallery.length === 0 ? (
           <p>No doodles yet — be the first.</p>
         ) : (
           <ul className="doodle-gallery-list">
@@ -161,15 +207,15 @@ export function DoodlePage() {
               <li key={entry.id} className="doodle-gallery-item">
                 <img
                   className="doodle-gallery-doodle"
-                  src={entry.imageDataUrl}
-                  alt={`Doodle by ${entry.name}`}
+                  src={`${API_BASE}/uploads/${entry.filename}`}
+                  alt={`Doodle by ${entry.artist}`}
                 />
                 <div className="doodle-gallery-artist">
                   <PixelArtAvatar
                     className="doodle-gallery-avatar"
-                    seed={entry.name}
+                    seed={entry.artist}
                   />
-                  <p>{entry.name}</p>
+                  <p>{entry.artist}</p>
                 </div>
               </li>
             ))}
