@@ -249,7 +249,7 @@ export function DoodlePage() {
             type="text"
             value={artist}
             onChange={(event) => setArtist(event.target.value)}
-            placeholder="little-elephant23"
+            placeholder="little-elephant"
             maxLength={40}
             autoComplete="nickname"
             disabled={submitted || submitting}
