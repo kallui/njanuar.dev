@@ -114,6 +114,11 @@ export function DoodlePage() {
       })
 
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error(
+            'Too many requests - please try again in a few moments.',
+          )
+        }
         const message = await response.text()
         throw new Error(message || 'Failed to save doodle.')
       }
@@ -123,7 +128,9 @@ export function DoodlePage() {
       setSubmittedMessage(pickSubmittedMessage())
       setSubmitted(true)
     } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : 'Failed to save doodle.')
+      setSubmitError(
+        err instanceof Error ? err.message : 'Failed to save doodle.',
+      )
     } finally {
       setSubmitting(false)
     }
