@@ -10,6 +10,7 @@ import { PixelArtAvatar } from '../components/PixelArtAvatar'
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8080'
 const ADMIN_SECRET_KEY = 'doodle-admin-secret'
 const ADMIN_AUTO_CONFIRM_KEY = 'doodle-admin-auto-confirm'
+const ALBUM_PAGE_SIZE = 12
 
 type Doodle = {
   id: string
@@ -77,9 +78,12 @@ export function DoodlePage() {
   const [autoConfirm, setAutoConfirm] = useState(
     () => sessionStorage.getItem(ADMIN_AUTO_CONFIRM_KEY) === '1',
   )
+  const [visibleCount, setVisibleCount] = useState(ALBUM_PAGE_SIZE)
   const adminPromptHandled = useRef(false)
 
   const isAdmin = adminSecret.length > 0
+  const visibleGallery = gallery.slice(0, visibleCount)
+  const hasMore = visibleCount < gallery.length
 
   useEffect(() => {
     let cancelled = false
@@ -313,37 +317,50 @@ export function DoodlePage() {
         ) : gallery.length === 0 ? (
           <p>No doodles yet — be the first.</p>
         ) : (
-          <ul className="doodle-gallery-list">
-            {gallery.map((entry) => (
-              <li key={entry.id} className="doodle-gallery-item">
-                <div className="doodle-gallery-media">
-                  <img
-                    className="doodle-gallery-doodle"
-                    src={`${API_BASE}/uploads/${entry.filename}`}
-                    alt={`Doodle by ${entry.artist}`}
-                  />
-                  {isAdmin && (
-                    <button
-                      type="button"
-                      className="doodle-delete-btn"
-                      onClick={() => void handleDelete(entry.id)}
-                      disabled={deletingId === entry.id}
-                      aria-label={`Delete doodle by ${entry.artist}`}
-                    >
-                      {deletingId === entry.id ? '…' : '×'}
-                    </button>
-                  )}
-                </div>
-                <div className="doodle-gallery-artist">
-                  <PixelArtAvatar
-                    className="doodle-gallery-avatar"
-                    seed={entry.artist}
-                  />
-                  <p>{entry.artist}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <>
+            <ul className="doodle-gallery-list">
+              {visibleGallery.map((entry) => (
+                <li key={entry.id} className="doodle-gallery-item">
+                  <div className="doodle-gallery-media">
+                    <img
+                      className="doodle-gallery-doodle"
+                      src={`${API_BASE}/uploads/${entry.filename}`}
+                      alt={`Doodle by ${entry.artist}`}
+                    />
+                    {isAdmin && (
+                      <button
+                        type="button"
+                        className="doodle-delete-btn"
+                        onClick={() => void handleDelete(entry.id)}
+                        disabled={deletingId === entry.id}
+                        aria-label={`Delete doodle by ${entry.artist}`}
+                      >
+                        {deletingId === entry.id ? '…' : '×'}
+                      </button>
+                    )}
+                  </div>
+                  <div className="doodle-gallery-artist">
+                    <PixelArtAvatar
+                      className="doodle-gallery-avatar"
+                      seed={entry.artist}
+                    />
+                    <p>{entry.artist}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            {hasMore && (
+              <button
+                type="button"
+                className="doodle-btn doodle-load-more"
+                onClick={() =>
+                  setVisibleCount((count) => count + ALBUM_PAGE_SIZE)
+                }
+              >
+                Load more
+              </button>
+            )}
+          </>
         )}
       </section>
     </main>

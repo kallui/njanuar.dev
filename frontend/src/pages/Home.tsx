@@ -38,8 +38,8 @@ export function Home() {
         <h2>Current rabbit hole</h2>
         <p>
           Currently exploring the world of DevOps and cloud. Setting up Linux
-          servers, writing bash scripts, building CI/CD pipelines, and learning
-          container orchestration.
+          servers, writing bash scripts, building CI/CD pipelines, and container
+          orchestration.
         </p>
       </section>
 
