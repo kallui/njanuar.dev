@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   DoodleCanvas,
   type DoodleCanvasHandle,
@@ -8,6 +8,8 @@ import { generateAnonymousName } from '../utils/anonymousName'
 import { PixelArtAvatar } from '../components/PixelArtAvatar'
 
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8080'
+const ADMIN_SECRET_KEY = 'doodle-admin-secret'
+const ADMIN_AUTO_CONFIRM_KEY = 'doodle-admin-auto-confirm'
 
 type Doodle = {
   id: string
@@ -55,6 +57,7 @@ function pickSubmittedMessage() {
 }
 
 export function DoodlePage() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const canvasRef = useRef<DoodleCanvasHandle>(null)
   const [artist, setArtist] = useState(() => generateAnonymousName())
   const [gallery, setGallery] = useState<Doodle[]>([])
@@ -66,6 +69,17 @@ export function DoodlePage() {
   const [submittedMessage, setSubmittedMessage] =
     useState<SubmittedMessage | null>(null)
   const [canvasKey, setCanvasKey] = useState(0)
+  const [adminSecret, setAdminSecret] = useState(
+    () => sessionStorage.getItem(ADMIN_SECRET_KEY) ?? '',
+  )
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [adminError, setAdminError] = useState('')
+  const [autoConfirm, setAutoConfirm] = useState(
+    () => sessionStorage.getItem(ADMIN_AUTO_CONFIRM_KEY) === '1',
+  )
+  const adminPromptHandled = useRef(false)
+
+  const isAdmin = adminSecret.length > 0
 
   useEffect(() => {
     let cancelled = false
@@ -88,6 +102,25 @@ export function DoodlePage() {
       cancelled = true
     }
   }, [])
+
+  useEffect(() => {
+    if (searchParams.get('admin') !== '1' || isAdmin) return
+    if (adminPromptHandled.current) return
+    adminPromptHandled.current = true
+
+    const entered = window.prompt('Admin secret')
+    if (entered && entered.trim()) {
+      const secret = entered.trim()
+      sessionStorage.setItem(ADMIN_SECRET_KEY, secret)
+      setAdminSecret(secret)
+      setAdminError('')
+    }
+
+    // Drop ?admin=1 so refresh doesn't keep re-prompting if they cancel.
+    const next = new URLSearchParams(searchParams)
+    next.delete('admin')
+    setSearchParams(next, { replace: true })
+  }, [searchParams, setSearchParams, isAdmin])
 
   const handleSubmit = async () => {
     if (submitted || submitting) return
@@ -142,6 +175,53 @@ export function DoodlePage() {
     setSubmittedMessage(null)
     setSubmitted(false)
     setCanvasKey((key) => key + 1)
+  }
+
+  const handleExitAdmin = () => {
+    sessionStorage.removeItem(ADMIN_SECRET_KEY)
+    setAdminSecret('')
+    setAdminError('')
+    setDeletingId(null)
+  }
+
+  const handleAutoConfirmChange = (enabled: boolean) => {
+    setAutoConfirm(enabled)
+    if (enabled) {
+      sessionStorage.setItem(ADMIN_AUTO_CONFIRM_KEY, '1')
+    } else {
+      sessionStorage.removeItem(ADMIN_AUTO_CONFIRM_KEY)
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!isAdmin || deletingId) return
+    if (!autoConfirm && !window.confirm('Delete this doodle?')) return
+
+    setDeletingId(id)
+    setAdminError('')
+
+    try {
+      const response = await fetch(`${API_BASE}/api/doodles/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${adminSecret}` },
+      })
+
+      if (response.status === 401) {
+        throw new Error('Wrong admin secret.')
+      }
+      if (!response.ok && response.status !== 204) {
+        const message = await response.text()
+        throw new Error(message || 'Failed to delete doodle.')
+      }
+
+      setGallery((prev) => prev.filter((entry) => entry.id !== id))
+    } catch (err) {
+      setAdminError(
+        err instanceof Error ? err.message : 'Failed to delete doodle.',
+      )
+    } finally {
+      setDeletingId(null)
+    }
   }
 
   return (
@@ -201,7 +281,31 @@ export function DoodlePage() {
       )}
 
       <section className="doodle-gallery">
-        <h2>Album</h2>
+        <div className="doodle-gallery-header">
+          <h2>Album</h2>
+          {isAdmin && (
+            <div className="doodle-admin-controls">
+              <label className="doodle-auto-confirm">
+                <input
+                  type="checkbox"
+                  checked={autoConfirm}
+                  onChange={(event) =>
+                    handleAutoConfirmChange(event.target.checked)
+                  }
+                />
+                Auto-confirm deletes
+              </label>
+              <button
+                type="button"
+                className="inline-link doodle-admin-toggle"
+                onClick={handleExitAdmin}
+              >
+                Exit admin
+              </button>
+            </div>
+          )}
+        </div>
+        {adminError && <p className="doodle-error">{adminError}</p>}
         {albumLoading ? (
           <p>Loading album…</p>
         ) : albumError ? (
@@ -212,11 +316,24 @@ export function DoodlePage() {
           <ul className="doodle-gallery-list">
             {gallery.map((entry) => (
               <li key={entry.id} className="doodle-gallery-item">
-                <img
-                  className="doodle-gallery-doodle"
-                  src={`${API_BASE}/uploads/${entry.filename}`}
-                  alt={`Doodle by ${entry.artist}`}
-                />
+                <div className="doodle-gallery-media">
+                  <img
+                    className="doodle-gallery-doodle"
+                    src={`${API_BASE}/uploads/${entry.filename}`}
+                    alt={`Doodle by ${entry.artist}`}
+                  />
+                  {isAdmin && (
+                    <button
+                      type="button"
+                      className="doodle-delete-btn"
+                      onClick={() => void handleDelete(entry.id)}
+                      disabled={deletingId === entry.id}
+                      aria-label={`Delete doodle by ${entry.artist}`}
+                    >
+                      {deletingId === entry.id ? '…' : '×'}
+                    </button>
+                  )}
+                </div>
                 <div className="doodle-gallery-artist">
                   <PixelArtAvatar
                     className="doodle-gallery-avatar"

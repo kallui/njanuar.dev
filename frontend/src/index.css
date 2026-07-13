@@ -731,6 +731,55 @@ section p + p {
   margin-top: 40px;
 }
 
+.doodle-gallery-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.doodle-gallery-header h2 {
+  margin: 0;
+}
+
+.doodle-admin-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.doodle-auto-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(176, 176, 176, 0.75);
+  cursor: pointer;
+  user-select: none;
+}
+
+.doodle-auto-confirm input {
+  margin: 0;
+  cursor: pointer;
+}
+
+.doodle-admin-toggle {
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: rgba(176, 176, 176, 0.65);
+  cursor: pointer;
+}
+
+.doodle-admin-toggle:hover {
+  color: var(--text-h);
+}
+
 .doodle-gallery-list {
   list-style: none;
   margin: 12px 0 0;
@@ -738,6 +787,10 @@ section p + p {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+
+.doodle-gallery-media {
+  position: relative;
 }
 
 .doodle-gallery-doodle {
@@ -748,6 +801,33 @@ section p + p {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 6px;
+}
+
+.doodle-delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background: rgba(15, 15, 15, 0.82);
+  color: #f3f4f6;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.doodle-delete-btn:hover:not(:disabled) {
+  background: #e5484d;
+  border-color: #e5484d;
+}
+
+.doodle-delete-btn:disabled {
+  cursor: default;
+  opacity: 0.7;
 }
 
 .doodle-gallery-artist {
