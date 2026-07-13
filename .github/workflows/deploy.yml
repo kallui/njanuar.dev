@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "frontend/**"
+      - "backend/**"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
@@ -13,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  frontend:
     runs-on: ubuntu-latest
 
     steps:
@@ -54,3 +55,45 @@ jobs:
             -e "ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" \
             frontend/dist/ \
             "${{ secrets.USERNAME }}@${{ secrets.HOST }}:/var/www/njanuar.dev/"
+
+  backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.24.3
+
+      - name: Build API
+        working-directory: backend
+        run: |
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o njanuar-api .
+
+      - name: Setup SSH
+          run: |
+            mkdir -p ~/.ssh
+            chmod 700 ~/.ssh
+            printf '%s\n' "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            ssh-keyscan -H "${{ secrets.HOST }}" >> ~/.ssh/known_hosts
+            chmod 644 ~/.ssh/known_hosts
+      - name: Deploy API
+        run: |
+          HOST="${{ secrets.USERNAME }}@${{ secrets.HOST }}"
+          SSH="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes"
+
+          # ship binary under a temp name, then atomic replace
+          rsync -avz \
+            -e "$SSH" \
+            backend/njanuar-api \
+            "$HOST:/opt/njanuar-api/njanuar-api.new"
+          $SSH "$HOST" '\
+            chmod +x /opt/njanuar-api/njanuar-api.new && \
+            mv /opt/njanuar-api/njanuar-api.new /opt/njanuar-api/njanuar-api && \
+            sudo -n systemctl restart njanuar-api && \
+            sudo -n systemctl is-active njanuar-api \
+          '
