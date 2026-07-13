@@ -18,12 +18,13 @@ Temporary working plan. Guest identity via `localStorage` (not IP/cookie). Site-
 - Wire doodle form to guest; don’t regen identity on “draw again” (unless expired on load)
 - UI: avatar preview + shuffle next to name
 - Done when: same-day refresh keeps identity; next day (after TTL) gets a new one; rename/shuffle works offline
+- **Status: Phase 1 implemented** (`guest.ts` + `DoodlePage` identity UI + `App` creates guest on any landing page). Album still seeds from `artist` until Phase 2.
 
 ## Phase 2 — Album `avatar_seed` (backend + frontend)
 
 - Extend Go types + POST with `avatar_seed`; store in `index.json`
 - Submit sends `artist` + `avatar_seed`
-- Album uses `entry.avatar_seed ?? entry.artist` for old rows
+- Album uses `entry.avatar_seed` (no legacy fallback needed — app not public yet; wipe/recreate local uploads if schema changes)
 - Done when: renamed/shuffled face is frozen on submit
 
 ## Phase 3 — Shared app shell (frontend)

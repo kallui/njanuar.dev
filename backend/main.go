@@ -119,7 +119,7 @@ func handleCreateDoodle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "artist is required", http.StatusBadRequest)
 		return
 	}
-	if len(artist) > 40 {
+	if len(artist) > 18 {
 		http.Error(w, "artist too long", http.StatusBadRequest)
 		return
 	}

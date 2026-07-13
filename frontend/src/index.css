@@ -634,49 +634,99 @@ section p + p {
 
 .doodle-form {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.doodle-name-field {
-  display: flex;
   flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  min-width: 180px;
+  gap: 10px;
+  margin: 16px 0 8px;
 }
 
-.doodle-name-field span {
+.doodle-form-label {
+  margin: 0;
   font-size: 12px;
   line-height: 16px;
-  color: rgba(176, 176, 176, 0.75);
+  color: rgba(176, 176, 176, 0.65);
 }
 
-.doodle-name-field input {
+.doodle-identity {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: visible;
+}
+
+.doodle-avatar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-right: 1px solid var(--border);
+  border-radius: 7px 0 0 7px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.doodle-avatar-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.doodle-avatar-btn:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.doodle-identity-avatar {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.doodle-identity-avatar svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: crispEdges;
+}
+
+.doodle-name-input {
+  flex: 1;
+  min-width: 0;
   width: 100%;
   box-sizing: border-box;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.04);
+  height: 40px;
+  padding: 0 12px;
+  border: none;
+  background: transparent;
   color: var(--text-h);
   font: inherit;
+  font-size: 14px;
+  line-height: 20px;
 }
 
-.doodle-name-field input::placeholder {
-  color: rgba(176, 176, 176, 0.45);
+.doodle-name-input::placeholder {
+  color: rgba(176, 176, 176, 0.4);
 }
 
-.doodle-name-field input:focus {
+.doodle-name-input:focus {
   outline: none;
+}
+
+.doodle-identity:focus-within {
   border-color: rgba(255, 255, 255, 0.28);
 }
 
-.doodle-actions {
-  display: flex;
-  gap: 8px;
+.doodle-name-input:disabled,
+.doodle-name-input:read-only {
+  opacity: 0.75;
+  cursor: default;
 }
 
 .doodle-btn {
@@ -689,7 +739,7 @@ section p + p {
   cursor: pointer;
 }
 
-.doodle-btn:hover {
+.doodle-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.04);
   color: var(--text-h);
 }
@@ -699,14 +749,17 @@ section p + p {
   color: var(--text-h);
 }
 
+.doodle-submit {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .doodle-btn:disabled {
   cursor: default;
   opacity: 0.55;
-}
-
-.doodle-name-field input:disabled {
-  opacity: 0.7;
-  cursor: default;
 }
 
 .doodle-error {
@@ -841,6 +894,7 @@ section p + p {
   align-items: center;
   gap: 8px;
   margin-top: 8px;
+  min-width: 0;
 }
 
 .doodle-gallery-avatar {
@@ -862,6 +916,10 @@ section p + p {
 
 .doodle-gallery-artist p {
   margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-family: 'Caveat', cursive;
   font-size: 18px;
   font-weight: 500;
