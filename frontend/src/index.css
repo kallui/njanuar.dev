@@ -1098,8 +1098,7 @@ section p + p {
 .doodle-gallery-doodle {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+  height: auto;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 6px;
