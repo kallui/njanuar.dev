@@ -1,7 +1,7 @@
 import benevityLogo from '../../assets/logos/benevity_36x36.jpg'
 import diagram from '../../assets/pictures/benevity_diagram.svg'
 import impactStory from '../../assets/pictures/benevity_example_impact_story.png'
-import demoVideo from '../../assets/pictures/benevity_demo.mp4'
+import demoVideo from '../../assets/pictures/benevity_demo_subtitled.mp4'
 import type { PortfolioItem } from '../types'
 
 export const benevity: PortfolioItem = {
