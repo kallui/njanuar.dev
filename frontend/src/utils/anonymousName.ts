@@ -9,6 +9,26 @@ const adjectives = [
   'gentle',
   'fuzzy',
   'swift',
+  'clever',
+  'merry',
+  'calm',
+  'bright',
+  'soft',
+  'witty',
+  'humble',
+  'jolly',
+  'kind',
+  'lucky',
+  'nimble',
+  'peppery',
+  'plucky',
+  'rosy',
+  'sincere',
+  'spry',
+  'tidy',
+  'wavy',
+  'zesty',
+  'dreamy',
 ]
 
 const animals = [
@@ -22,11 +42,35 @@ const animals = [
   'hedgehog',
   'raccoon',
   'bunny',
+  'badger',
+  'beaver',
+  'chipmunk',
+  'crane',
+  'dolphin',
+  'finch',
+  'goose',
+  'heron',
+  'ibis',
+  'jellyfish',
+  'kiwi',
+  'lemur',
+  'moose',
+  'newt',
+  'owl',
+  'puffin',
+  'quail',
+  'robin',
+  'seal',
+  'turtle',
+  'ferret',
+  'vole',
+  'walrus',
+  'wombat',
+  'deer',
 ]
 
 export function generateAnonymousName() {
   const adjective = adjectives[Math.floor(Math.random() * adjectives.length)]
   const animal = animals[Math.floor(Math.random() * animals.length)]
-  const number = Math.floor(Math.random() * 90) + 10
-  return `${adjective}-${animal}${number}`
+  return `${adjective}-${animal}`
 }

@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type FocusEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
   DoodleCanvas,
   type DoodleCanvasHandle,
 } from '../components/DoodleCanvas'
-import { generateAnonymousName } from '../utils/anonymousName'
 import { PixelArtAvatar } from '../components/PixelArtAvatar'
+import { useGuest } from '../context/GuestContext'
+import { MAX_DISPLAY_NAME_LENGTH } from '../utils/guest'
 
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8080'
 const ADMIN_SECRET_KEY = 'doodle-admin-secret'
@@ -15,6 +16,7 @@ const ALBUM_PAGE_SIZE = 12
 type Doodle = {
   id: string
   artist: string
+  avatar_seed: string
   filename: string
   created_at: string
 }
@@ -60,7 +62,7 @@ function pickSubmittedMessage() {
 export function DoodlePage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const canvasRef = useRef<DoodleCanvasHandle>(null)
-  const [artist, setArtist] = useState(() => generateAnonymousName())
+  const { guest, setDisplayName, commitDisplayName, shuffleAvatar } = useGuest()
   const [gallery, setGallery] = useState<Doodle[]>([])
   const [albumLoading, setAlbumLoading] = useState(true)
   const [albumError, setAlbumError] = useState('')
@@ -135,19 +137,21 @@ export function DoodlePage() {
       return
     }
 
-    const trimmed = artist.trim()
-    const finalArtist = trimmed || generateAnonymousName()
+    const nextGuest = commitDisplayName(guest.displayName)
     const imageDataUrl = canvas.toDataURL()
 
     setSubmitting(true)
     setSubmitError('')
-    setArtist(finalArtist)
 
     try {
       const response = await fetch(`${API_BASE}/api/doodles`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ artist: finalArtist, image: imageDataUrl }),
+        body: JSON.stringify({
+          artist: nextGuest.displayName,
+          avatar_seed: nextGuest.avatarSeed,
+          image: imageDataUrl,
+        }),
       })
 
       if (!response.ok) {
@@ -174,11 +178,22 @@ export function DoodlePage() {
   }
 
   const handleDrawAgain = () => {
-    setArtist(generateAnonymousName())
     setSubmitError('')
     setSubmittedMessage(null)
     setSubmitted(false)
     setCanvasKey((key) => key + 1)
+  }
+
+  const handleNameChange = (displayName: string) => {
+    setDisplayName(displayName)
+  }
+
+  const handleNameBlur = (event: FocusEvent<HTMLInputElement>) => {
+    commitDisplayName(event.target.value)
+  }
+
+  const handleShuffleAvatar = () => {
+    shuffleAvatar()
   }
 
   const handleExitAdmin = () => {
@@ -242,31 +257,45 @@ export function DoodlePage() {
       <DoodleCanvas key={canvasKey} ref={canvasRef} locked={submitted} />
 
       <div className="doodle-form">
-        <label className="doodle-name-field" htmlFor="doodle-artist">
-          <span>Name</span>
+        <p className="doodle-form-label">Drawing as</p>
+        <div className="doodle-identity">
+          <button
+            type="button"
+            className="doodle-avatar-btn has-tooltip"
+            onClick={handleShuffleAvatar}
+            disabled={submitted || submitting}
+            data-tooltip="Shuffle avatar"
+            aria-label="Shuffle avatar"
+          >
+            <PixelArtAvatar
+              className="doodle-identity-avatar"
+              seed={guest.avatarSeed}
+            />
+          </button>
           <input
             id="doodle-artist"
+            className="doodle-name-input"
             type="text"
-            value={artist}
-            onChange={(event) => setArtist(event.target.value)}
-            placeholder="little-elephant23"
-            maxLength={40}
+            value={guest.displayName}
+            onChange={(event) => handleNameChange(event.target.value)}
+            onBlur={handleNameBlur}
+            placeholder="little-elephant"
+              maxLength={MAX_DISPLAY_NAME_LENGTH}
             autoComplete="nickname"
             disabled={submitted || submitting}
             readOnly={submitted}
+            aria-label="Display name"
           />
-        </label>
-
-        <div className="doodle-actions">
-          <button
-            type="button"
-            className="doodle-btn doodle-btn--primary"
-            onClick={handleSubmit}
-            disabled={submitted || submitting}
-          >
-            {submitted ? 'Submitted' : submitting ? 'Submitting…' : 'Submit'}
-          </button>
         </div>
+
+        <button
+          type="button"
+          className="doodle-btn doodle-btn--primary doodle-submit"
+          onClick={handleSubmit}
+          disabled={submitted || submitting}
+        >
+          {submitted ? 'Submitted' : submitting ? 'Submitting…' : 'Submit doodle'}
+        </button>
       </div>
 
       {submitError && <p className="doodle-error">{submitError}</p>}
@@ -342,7 +371,7 @@ export function DoodlePage() {
                   <div className="doodle-gallery-artist">
                     <PixelArtAvatar
                       className="doodle-gallery-avatar"
-                      seed={entry.artist}
+                      seed={entry.avatar_seed}
                     />
                     <p>{entry.artist}</p>
                   </div>

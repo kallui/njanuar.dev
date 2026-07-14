@@ -25,6 +25,7 @@ const DOODLE_COLOR_LABELS: Record<(typeof DOODLE_COLORS)[number], string> = {
 
 const BRUSH_SIZE_MIN = 2
 const BRUSH_SIZE_MAX = 16
+const BRUSH_SIZE_DEFAULT = Math.round(BRUSH_SIZE_MAX * 0.6)
 const HISTORY_LIMIT = 40
 
 function pickRandomColor() {
@@ -168,7 +169,7 @@ export const DoodleCanvas = forwardRef<DoodleCanvasHandle, DoodleCanvasProps>(
     const historyIndexRef = useRef(-1)
 
     const [color, setColor] = useState<string>(() => pickRandomColor())
-    const [brushSize, setBrushSize] = useState(5)
+    const [brushSize, setBrushSize] = useState(BRUSH_SIZE_DEFAULT)
     const [tool, setTool] = useState<Tool>('brush')
     const [canUndo, setCanUndo] = useState(false)
     const [canRedo, setCanRedo] = useState(false)

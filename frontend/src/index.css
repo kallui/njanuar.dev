@@ -355,6 +355,199 @@ section p + p {
   white-space: nowrap;
 }
 
+.presence-bar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.presence-stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  opacity: 0.82;
+  transition: opacity 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.presence-stack.is-expanded {
+  opacity: 0.95;
+}
+
+.presence-stack li {
+  margin-left: -8px;
+  pointer-events: auto;
+  position: relative;
+  transition: margin-left 160ms ease;
+}
+
+.presence-stack li:first-child {
+  margin-left: 0;
+}
+
+/* Untuck leftward while pressed/hovered; collapse is delayed in JS */
+.presence-stack.is-expanded li {
+  margin-left: 6px;
+}
+
+.presence-stack.is-expanded li:first-child {
+  margin-left: 0;
+}
+
+.presence-stack.is-expanded li:hover,
+.presence-stack.is-expanded li:focus-within {
+  z-index: 20 !important;
+}
+
+.presence-overflow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(28, 28, 28, 0.96);
+  /* Match avatar color-ring: 2px outset, so outer size matches PFPs */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22);
+  color: var(--text-h);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: default;
+}
+
+.presence-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  cursor: default;
+}
+
+.presence-avatar-face {
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.presence-avatar-face svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: crispEdges;
+}
+
+@media (max-width: 600px) {
+  .presence-bar {
+    top: 14px;
+    right: 14px;
+  }
+
+  .presence-avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .presence-overflow {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    font-size: 9px;
+  }
+
+  .presence-avatar-face {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ── Cursors ──────────────────────────────────────────── */
+
+.cursor-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.peer-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.7;
+  will-change: transform;
+  transition: transform 100ms linear;
+}
+
+.peer-cursor-pointer {
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin: -1px 0 0 -1px;
+  overflow: visible;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.22));
+}
+
+.peer-cursor-label {
+  /* Tuck into diagonal bottom-right of the tip (reference layout) */
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 132px;
+  padding: 3px 8px 3px 3px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+.peer-cursor-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.peer-cursor-avatar {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.22);
+  flex-shrink: 0;
+}
+
+.peer-cursor-avatar svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: crispEdges;
+}
+
+/* ── Dock ─────────────────────────────────────────────── */
+
 .dock {
   position: fixed;
   bottom: 24px;
@@ -431,6 +624,34 @@ section p + p {
 .has-tooltip:has(input:disabled):hover::after {
   opacity: 0;
   transform: translateX(-50%) translateY(4px);
+}
+
+.has-tooltip--below::after {
+  top: calc(100% + 8px);
+  bottom: auto;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.has-tooltip--below:hover::after,
+.has-tooltip--below:focus-visible::after {
+  transform: translateX(-50%) translateY(0);
+}
+
+.has-tooltip--below:disabled:hover::after,
+.has-tooltip--below:disabled:focus-visible::after {
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* Keep presence tooltips on-screen: same box style, shift whole box inward */
+.presence-bar .has-tooltip--below::after {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(-4px);
+}
+
+.presence-bar .has-tooltip--below:hover::after,
+.presence-bar .has-tooltip--below:focus-visible::after {
+  transform: translateX(0) translateY(0);
 }
 
 .doodle-page .detail-header {
@@ -634,49 +855,99 @@ section p + p {
 
 .doodle-form {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.doodle-name-field {
-  display: flex;
   flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  min-width: 180px;
+  gap: 10px;
+  margin: 16px 0 8px;
 }
 
-.doodle-name-field span {
+.doodle-form-label {
+  margin: 0;
   font-size: 12px;
   line-height: 16px;
-  color: rgba(176, 176, 176, 0.75);
+  color: rgba(176, 176, 176, 0.65);
 }
 
-.doodle-name-field input {
+.doodle-identity {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: visible;
+}
+
+.doodle-avatar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-right: 1px solid var(--border);
+  border-radius: 7px 0 0 7px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.doodle-avatar-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.doodle-avatar-btn:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.doodle-identity-avatar {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.doodle-identity-avatar svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: crispEdges;
+}
+
+.doodle-name-input {
+  flex: 1;
+  min-width: 0;
   width: 100%;
   box-sizing: border-box;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.04);
+  height: 40px;
+  padding: 0 12px;
+  border: none;
+  background: transparent;
   color: var(--text-h);
   font: inherit;
+  font-size: 14px;
+  line-height: 20px;
 }
 
-.doodle-name-field input::placeholder {
-  color: rgba(176, 176, 176, 0.45);
+.doodle-name-input::placeholder {
+  color: rgba(176, 176, 176, 0.4);
 }
 
-.doodle-name-field input:focus {
+.doodle-name-input:focus {
   outline: none;
+}
+
+.doodle-identity:focus-within {
   border-color: rgba(255, 255, 255, 0.28);
 }
 
-.doodle-actions {
-  display: flex;
-  gap: 8px;
+.doodle-name-input:disabled,
+.doodle-name-input:read-only {
+  opacity: 0.75;
+  cursor: default;
 }
 
 .doodle-btn {
@@ -689,7 +960,7 @@ section p + p {
   cursor: pointer;
 }
 
-.doodle-btn:hover {
+.doodle-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.04);
   color: var(--text-h);
 }
@@ -699,14 +970,17 @@ section p + p {
   color: var(--text-h);
 }
 
+.doodle-submit {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .doodle-btn:disabled {
   cursor: default;
   opacity: 0.55;
-}
-
-.doodle-name-field input:disabled {
-  opacity: 0.7;
-  cursor: default;
 }
 
 .doodle-error {
@@ -841,6 +1115,7 @@ section p + p {
   align-items: center;
   gap: 8px;
   margin-top: 8px;
+  min-width: 0;
 }
 
 .doodle-gallery-avatar {
@@ -862,6 +1137,10 @@ section p + p {
 
 .doodle-gallery-artist p {
   margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-family: 'Caveat', cursive;
   font-size: 18px;
   font-weight: 500;
@@ -878,4 +1157,3 @@ section p + p {
     grid-template-columns: 1fr;
   }
 }
-
