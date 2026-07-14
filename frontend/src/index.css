@@ -368,17 +368,61 @@ section p + p {
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;
+  opacity: 0.82;
+  transition: opacity 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.presence-stack.is-expanded {
+  opacity: 0.95;
 }
 
 .presence-stack li {
-  margin-left: -6px;
+  margin-left: -8px;
   pointer-events: auto;
+  position: relative;
+  transition: margin-left 160ms ease;
 }
 
-.presence-stack li:last-child {
+.presence-stack li:first-child {
   margin-left: 0;
+}
+
+/* Untuck leftward while pressed/hovered; collapse is delayed in JS */
+.presence-stack.is-expanded li {
+  margin-left: 6px;
+}
+
+.presence-stack.is-expanded li:first-child {
+  margin-left: 0;
+}
+
+.presence-stack.is-expanded li:hover,
+.presence-stack.is-expanded li:focus-within {
+  z-index: 20 !important;
+}
+
+.presence-overflow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(28, 28, 28, 0.96);
+  /* Match avatar color-ring: 2px outset, so outer size matches PFPs */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22);
+  color: var(--text-h);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: default;
 }
 
 .presence-avatar {
@@ -388,7 +432,7 @@ section p + p {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #fff;
+  background: #1a1a1a;
   cursor: default;
 }
 
@@ -418,11 +462,91 @@ section p + p {
     height: 30px;
   }
 
+  .presence-overflow {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    font-size: 9px;
+  }
+
   .presence-avatar-face {
     width: 22px;
     height: 22px;
   }
 }
+
+/* ── Cursors ──────────────────────────────────────────── */
+
+.cursor-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.peer-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.7;
+  will-change: transform;
+  transition: transform 100ms linear;
+}
+
+.peer-cursor-pointer {
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin: -1px 0 0 -1px;
+  overflow: visible;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.22));
+}
+
+.peer-cursor-label {
+  /* Tuck into diagonal bottom-right of the tip (reference layout) */
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 132px;
+  padding: 3px 8px 3px 3px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+.peer-cursor-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.peer-cursor-avatar {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.22);
+  flex-shrink: 0;
+}
+
+.peer-cursor-avatar svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: crispEdges;
+}
+
+/* ── Dock ─────────────────────────────────────────────── */
 
 .dock {
   position: fixed;
@@ -518,15 +642,15 @@ section p + p {
   transform: translateX(-50%) translateY(-4px);
 }
 
-/* Keep presence tooltips on-screen at the top-right corner */
-.presence-avatar.has-tooltip--below::after {
+/* Keep presence tooltips on-screen: same box style, shift whole box inward */
+.presence-bar .has-tooltip--below::after {
   left: auto;
   right: 0;
   transform: translateX(0) translateY(-4px);
 }
 
-.presence-avatar.has-tooltip--below:hover::after,
-.presence-avatar.has-tooltip--below:focus-visible::after {
+.presence-bar .has-tooltip--below:hover::after,
+.presence-bar .has-tooltip--below:focus-visible::after {
   transform: translateX(0) translateY(0);
 }
 
@@ -1033,4 +1157,3 @@ section p + p {
     grid-template-columns: 1fr;
   }
 }
-

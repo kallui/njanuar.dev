@@ -54,6 +54,9 @@ func main() {
 		http.StripPrefix("/uploads/", http.FileServer(http.Dir("uploads"))),
 	)
 
+	hub := newHub()
+	mux.HandleFunc("GET /ws", hub.handleWS)
+
 	addr := ":8080"
 	log.Printf("listening on http://localhost%s", addr)
 
