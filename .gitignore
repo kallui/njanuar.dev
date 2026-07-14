@@ -16,6 +16,9 @@ dist-ssr
 # Backend uploads (saved doodle PNGs)
 backend/uploads/
 
+# Built API binary
+backend/njanuar-api
+
 # Vite
 .vite
 
