@@ -5,12 +5,8 @@ import {
   type DoodleCanvasHandle,
 } from '../components/DoodleCanvas'
 import { PixelArtAvatar } from '../components/PixelArtAvatar'
-import {
-  loadOrCreateGuest,
-  MAX_DISPLAY_NAME_LENGTH,
-  shuffleGuestAvatar,
-  updateGuestName,
-} from '../utils/guest'
+import { useGuest } from '../context/GuestContext'
+import { MAX_DISPLAY_NAME_LENGTH } from '../utils/guest'
 
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8080'
 const ADMIN_SECRET_KEY = 'doodle-admin-secret'
@@ -20,6 +16,7 @@ const ALBUM_PAGE_SIZE = 12
 type Doodle = {
   id: string
   artist: string
+  avatar_seed: string
   filename: string
   created_at: string
 }
@@ -65,7 +62,7 @@ function pickSubmittedMessage() {
 export function DoodlePage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const canvasRef = useRef<DoodleCanvasHandle>(null)
-  const [guest, setGuest] = useState(() => loadOrCreateGuest())
+  const { guest, setDisplayName, commitDisplayName, shuffleAvatar } = useGuest()
   const [gallery, setGallery] = useState<Doodle[]>([])
   const [albumLoading, setAlbumLoading] = useState(true)
   const [albumError, setAlbumError] = useState('')
@@ -140,8 +137,7 @@ export function DoodlePage() {
       return
     }
 
-    const nextGuest = updateGuestName(guest.displayName, guest)
-    setGuest(nextGuest)
+    const nextGuest = commitDisplayName(guest.displayName)
     const imageDataUrl = canvas.toDataURL()
 
     setSubmitting(true)
@@ -153,6 +149,7 @@ export function DoodlePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           artist: nextGuest.displayName,
+          avatar_seed: nextGuest.avatarSeed,
           image: imageDataUrl,
         }),
       })
@@ -188,18 +185,15 @@ export function DoodlePage() {
   }
 
   const handleNameChange = (displayName: string) => {
-    setGuest((current) => ({
-      ...current,
-      displayName: displayName.slice(0, MAX_DISPLAY_NAME_LENGTH),
-    }))
+    setDisplayName(displayName)
   }
 
   const handleNameBlur = (event: FocusEvent<HTMLInputElement>) => {
-    setGuest((current) => updateGuestName(event.target.value, current))
+    commitDisplayName(event.target.value)
   }
 
   const handleShuffleAvatar = () => {
-    setGuest((current) => shuffleGuestAvatar(current))
+    shuffleAvatar()
   }
 
   const handleExitAdmin = () => {
@@ -377,7 +371,7 @@ export function DoodlePage() {
                   <div className="doodle-gallery-artist">
                     <PixelArtAvatar
                       className="doodle-gallery-avatar"
-                      seed={entry.artist}
+                      seed={entry.avatar_seed}
                     />
                     <p>{entry.artist}</p>
                   </div>

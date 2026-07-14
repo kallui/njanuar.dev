@@ -16,15 +16,17 @@ import (
 // Your canvas already produces a data URL like:
 //   "data:image/png;base64,iVBORw0KGgo..."
 type CreateDoodleRequest struct {
-	Artist string `json:"artist"`
-	Image  string `json:"image"` // data URL from canvas.toDataURL()
+	Artist     string `json:"artist"`
+	AvatarSeed string `json:"avatar_seed"`
+	Image      string `json:"image"` // data URL from canvas.toDataURL()
 }
 
 type DoodleEntry struct {
-	ID        string    `json:"id"`
-	Artist    string    `json:"artist"`
-	Filename  string    `json:"filename"`
-	CreatedAt time.Time `json:"created_at"`
+	ID         string    `json:"id"`
+	Artist     string    `json:"artist"`
+	AvatarSeed string    `json:"avatar_seed"`
+	Filename   string    `json:"filename"`
+	CreatedAt  time.Time `json:"created_at"`
 }
 
 func main() {
@@ -124,6 +126,16 @@ func handleCreateDoodle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	avatarSeed := strings.TrimSpace(req.AvatarSeed)
+	if avatarSeed == "" {
+		http.Error(w, "avatar_seed is required", http.StatusBadRequest)
+		return
+	}
+	if len(avatarSeed) > 64 {
+		http.Error(w, "avatar_seed too long", http.StatusBadRequest)
+		return
+	}
+
 	pngBytes, err := decodeDataURLPNG(req.Image)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -140,10 +152,11 @@ func handleCreateDoodle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	entry := DoodleEntry{
-		ID:        id,
-		Artist:    artist,
-		Filename:  filename,
-		CreatedAt: time.Now(),
+		ID:         id,
+		Artist:     artist,
+		AvatarSeed: avatarSeed,
+		Filename:   filename,
+		CreatedAt:  time.Now(),
 	}
 
 	entries, err := loadIndex()

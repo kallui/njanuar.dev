@@ -26,6 +26,7 @@ Temporary working plan. Guest identity via `localStorage` (not IP/cookie). Site-
 - Submit sends `artist` + `avatar_seed`
 - Album uses `entry.avatar_seed` (no legacy fallback needed — app not public yet; wipe/recreate local uploads if schema changes)
 - Done when: renamed/shuffled face is frozen on submit
+- **Status: Phase 2 implemented**
 
 ## Phase 3 — Shared app shell (frontend)
 
@@ -33,6 +34,7 @@ Temporary working plan. Guest identity via `localStorage` (not IP/cookie). Site-
 - Guest available on every page
 - Track `currentPage` from `location.pathname`
 - Done when: presence chrome exists (can be placeholder)
+- **Status: Phase 3 implemented** (`GuestProvider`, `AppLayout`, `PresenceBar` shows local guest + page tooltip)
 
 ## Phase 4 — WebSocket hub (backend)
 

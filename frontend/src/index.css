@@ -355,6 +355,75 @@ section p + p {
   white-space: nowrap;
 }
 
+.presence-bar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.presence-stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.presence-stack li {
+  margin-left: -6px;
+  pointer-events: auto;
+}
+
+.presence-stack li:last-child {
+  margin-left: 0;
+}
+
+.presence-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: default;
+}
+
+.presence-avatar-face {
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.presence-avatar-face svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: crispEdges;
+}
+
+@media (max-width: 600px) {
+  .presence-bar {
+    top: 14px;
+    right: 14px;
+  }
+
+  .presence-avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .presence-avatar-face {
+    width: 22px;
+    height: 22px;
+  }
+}
+
 .dock {
   position: fixed;
   bottom: 24px;
@@ -431,6 +500,34 @@ section p + p {
 .has-tooltip:has(input:disabled):hover::after {
   opacity: 0;
   transform: translateX(-50%) translateY(4px);
+}
+
+.has-tooltip--below::after {
+  top: calc(100% + 8px);
+  bottom: auto;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.has-tooltip--below:hover::after,
+.has-tooltip--below:focus-visible::after {
+  transform: translateX(-50%) translateY(0);
+}
+
+.has-tooltip--below:disabled:hover::after,
+.has-tooltip--below:disabled:focus-visible::after {
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* Keep presence tooltips on-screen at the top-right corner */
+.presence-avatar.has-tooltip--below::after {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(-4px);
+}
+
+.presence-avatar.has-tooltip--below:hover::after,
+.presence-avatar.has-tooltip--below:focus-visible::after {
+  transform: translateX(0) translateY(0);
 }
 
 .doodle-page .detail-header {
