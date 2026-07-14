@@ -6,4 +6,4 @@ Personal portfolio site.
 | -------- | ----------------------------- |
 | Frontend | React, TypeScript             |
 | Backend  | Go, Gorilla WebSocket         |
-| Server   | DigitalOcean Droplet (Ubuntu) |
+| Server   | DigitalOcean Droplet - Ubuntu |
