@@ -14,8 +14,8 @@ export function Home() {
         </div>
         <h1>Nicholas Januar</h1>
         <p>
-          Hi, you can call me Niko. I like making things that make my life a
-          little easier.
+          Hi, you can call me Niko. I enjoy building softwares to solve problems
+          I run into.
         </p>
       </header>
 
