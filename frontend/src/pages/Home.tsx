@@ -37,8 +37,8 @@ export function Home() {
       <section>
         <h2>Current rabbit hole</h2>
         <p>
-          Currently exploring the world of DevOps and cloud. Setting up Linux
-          servers, writing bash scripts, building CI/CD pipelines, and container
+          Currently exploring DevOps and cloud. Setting up Linux servers,
+          writing bash scripts, building CI/CD pipelines, and container
           orchestration.
         </p>
       </section>
@@ -50,11 +50,9 @@ export function Home() {
           <br />
           Now leave a little piece of yours.
         </p>
-        <p>
-          <Link to="/doodle" className="inline-link">
-            Leave a doodle
-          </Link>
-        </p>
+        <Link to="/doodle" className="doodle-cta">
+          Leave a doodle
+        </Link>
       </section>
     </main>
   )

@@ -276,6 +276,23 @@ a:hover {
   text-decoration: underline;
 }
 
+.doodle-cta {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 7px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.doodle-cta:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
 .inline-link {
   color: #fff;
   text-decoration: underline;
@@ -1012,8 +1029,19 @@ section p + p {
   gap: 12px;
 }
 
+.doodle-gallery-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
 .doodle-gallery-header h2 {
   margin: 0;
+}
+
+.doodle-gallery-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .doodle-admin-controls {

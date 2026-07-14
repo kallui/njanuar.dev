@@ -251,7 +251,7 @@ export function DoodlePage() {
 
       <header className="detail-header">
         <h1>Doodle</h1>
-        <p>Leave your mark on my little corner of the internet.</p>
+        <p>Draw a doodle and become part of the wall.</p>
       </header>
 
       <DoodleCanvas key={canvasKey} ref={canvasRef} locked={submitted} />
@@ -280,7 +280,7 @@ export function DoodlePage() {
             onChange={(event) => handleNameChange(event.target.value)}
             onBlur={handleNameBlur}
             placeholder="little-elephant"
-              maxLength={MAX_DISPLAY_NAME_LENGTH}
+            maxLength={MAX_DISPLAY_NAME_LENGTH}
             autoComplete="nickname"
             disabled={submitted || submitting}
             readOnly={submitted}
@@ -294,7 +294,11 @@ export function DoodlePage() {
           onClick={handleSubmit}
           disabled={submitted || submitting}
         >
-          {submitted ? 'Submitted' : submitting ? 'Submitting…' : 'Submit doodle'}
+          {submitted
+            ? 'Submitted'
+            : submitting
+              ? 'Submitting…'
+              : 'Submit doodle'}
         </button>
       </div>
 
@@ -315,9 +319,20 @@ export function DoodlePage() {
 
       <section className="doodle-gallery">
         <div className="doodle-gallery-header">
-          <h2>Album</h2>
+          <div className="doodle-gallery-title">
+            <h2>Album</h2>
+            {!albumLoading && !albumError && gallery.length > 0 && (
+              <span className="doodle-gallery-count">
+                🎨 {gallery.length} doodle{gallery.length !== 1 ? 's' : ''} have
+                joined the wall
+              </span>
+            )}
+          </div>
           {isAdmin && (
-            <div className="doodle-admin-controls">
+            <div
+              className="doodle-admin-controls"
+              style={{ marginLeft: 'auto' }}
+            >
               <label className="doodle-auto-confirm">
                 <input
                   type="checkbox"

@@ -5,6 +5,9 @@ import { usePresence } from '../context/PresenceContext'
 /**
  * Listens to pointermove, sends normalized cursor coords, and renders
  * same-page peer cursors as floating labels. Mounted once in AppLayout.
+ *
+ * Touch-primary devices only broadcast while a finger is down; idle
+ * cleanup (same 3s as desktop) removes the cursor after they stop.
  */
 export function CursorLayer() {
   const { peers, cursors, sendCursor } = usePresence()
@@ -12,11 +15,10 @@ export function CursorLayer() {
   const pendingRef = useRef<{ x: number; y: number } | null>(null)
 
   useEffect(() => {
-    // Touch-primary devices (phones/tablets) have imprecise pointers — skip
-    // sending cursor positions entirely; they can still see others' cursors.
-    if (window.matchMedia('(pointer: coarse)').matches) return
+    const coarse = window.matchMedia('(pointer: coarse)').matches
+    let touching = false
 
-    const onMove = (e: PointerEvent) => {
+    const queue = (e: PointerEvent) => {
       pendingRef.current = {
         x: e.clientX / window.innerWidth,
         y: e.clientY / window.innerHeight,
@@ -31,9 +33,37 @@ export function CursorLayer() {
       })
     }
 
+    const onMove = (e: PointerEvent) => {
+      if (coarse && !touching) return
+      queue(e)
+    }
+
+    const onDown = (e: PointerEvent) => {
+      if (!coarse) return
+      if (e.pointerType === 'mouse') return
+      touching = true
+      queue(e)
+    }
+
+    const onUp = (e: PointerEvent) => {
+      if (!coarse || !touching) return
+      if (e.pointerType === 'mouse') return
+      touching = false
+    }
+
     window.addEventListener('pointermove', onMove, { passive: true })
+    if (coarse) {
+      window.addEventListener('pointerdown', onDown, { passive: true })
+      window.addEventListener('pointerup', onUp, { passive: true })
+      window.addEventListener('pointercancel', onUp, { passive: true })
+    }
     return () => {
       window.removeEventListener('pointermove', onMove)
+      if (coarse) {
+        window.removeEventListener('pointerdown', onDown)
+        window.removeEventListener('pointerup', onUp)
+        window.removeEventListener('pointercancel', onUp)
+      }
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
     }
   }, [sendCursor])
