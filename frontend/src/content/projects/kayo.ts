@@ -10,7 +10,7 @@ export const kayo: PortfolioItem = {
   roles: [
     {
       title:
-        'Watch your belongings using object detection and real-time alerts.',
+        'Watch your belongings using object detection and real-time alerts',
       years: '2024',
       dates: 'Jan 2024',
     },
