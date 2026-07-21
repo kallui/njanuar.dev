@@ -35,12 +35,11 @@ export function Home() {
       </section>
 
       <section>
-        <h2>Current rabbit hole</h2>
-        <p>
-          Currently exploring DevOps and cloud. Setting up Linux servers,
-          writing bash scripts, building CI/CD pipelines, and container
-          orchestration.
-        </p>
+        <h2>Now</h2>
+        <p>Currently learning about DevOps and cloud.</p>
+        <Link to="/devops" className="doodle-cta">
+          Read more →
+        </Link>
       </section>
 
       <section>

@@ -359,7 +359,7 @@ export function DoodlePage() {
         ) : albumError ? (
           <p className="doodle-error">{albumError}</p>
         ) : gallery.length === 0 ? (
-          <p>No doodles yet — be the first.</p>
+          <p>No doodles yet - be the first.</p>
         ) : (
           <>
             <ul className="doodle-gallery-list">
