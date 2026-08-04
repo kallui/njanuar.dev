@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { ENABLE_PRESENCE } from '../config/features'
 import { PresenceBar } from './PresenceBar'
 import { CursorLayer } from './CursorLayer'
 
@@ -17,8 +18,8 @@ export function AppLayout() {
 
   return (
     <>
-      <PresenceBar />
-      <CursorLayer />
+      {ENABLE_PRESENCE && <PresenceBar />}
+      {ENABLE_PRESENCE && <CursorLayer />}
       <Outlet />
     </>
   )

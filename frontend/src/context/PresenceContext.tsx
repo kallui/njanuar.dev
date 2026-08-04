@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { ENABLE_PRESENCE } from '../config/features'
 import { useGuest } from './GuestContext'
 import { getWsUrl } from '../utils/wsUrl'
 
@@ -93,7 +94,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
   const [peers, setPeers] = useState<PresencePeer[]>([])
   const [cursors, setCursors] = useState<PeerCursor[]>([])
   const [status, setStatus] = useState<'connecting' | 'open' | 'closed'>(
-    'connecting',
+    ENABLE_PRESENCE ? 'connecting' : 'closed',
   )
 
   const wsRef = useRef<WebSocket | null>(null)
@@ -151,6 +152,8 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
   )
 
   useEffect(() => {
+    if (!ENABLE_PRESENCE) return
+
     aliveRef.current = true
     let reconnectTimer: number | null = null
 
@@ -277,6 +280,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
 
   // Idle cursor cleanup: remove cursors that haven't moved for CURSOR_IDLE_MS
   useEffect(() => {
+    if (!ENABLE_PRESENCE) return
     const interval = setInterval(() => {
       const cutoff = Date.now() - CURSOR_IDLE_MS
       setCursors((prev) => {
