@@ -18,27 +18,20 @@ export const ridendine: PortfolioItem = {
       dates: 'Jan 2026 - Present',
     },
   ],
+  summary:
+    'A web app that finds restaurants along your public transit route, so you can grab food without leaving your commute.',
+  tech: 'React · TypeScript · Next.js · Google Maps · Places API · TransLink GTFS · Vercel',
   content: [
+    {
+      type: 'paragraph',
+      text: `[RideNDine](https://ridendine.app) started from my own commute. Spending hours on transit each day, I often wanted dinner on the way home — but finding food that fit my route meant checking stops and restaurants one by one.
+
+Google Maps and Apple Maps make this easy for drivers. For transit riders, it doesn't. I built RideNDine to close that gap.`,
+    },
     {
       type: 'image',
       src: webOverall,
       alt: 'RideNDine overall app screenshot',
-    },
-    {
-      type: 'paragraph',
-      text: '[www.ridendine.app](https://ridendine.app)',
-    },
-    {
-      type: 'heading',
-      text: 'The Problem',
-    },
-    {
-      type: 'paragraph',
-      text: `[RideNDine](https://ridendine.app) started from my own commute.
-
-When I started working in a different city, I found myself spending hours on public transit every day without knowing what food options were available along the way. After work, I often wanted to grab dinner on my trip home, but finding places that fit naturally into my route meant jumping between transit stops and restaurant searches.
-
-Google Maps already makes it easy for drivers to discover restaurants along their route. For public transit riders, however, finding convenient food stops often means checking stations and nearby restaurants one by one. I built RideNDine to make those discoveries easier.`,
     },
     {
       type: 'heading',
@@ -83,10 +76,6 @@ Google Maps already makes it easy for drivers to discover restaurants along thei
       text: 'Coverage',
     },
     {
-      type: 'heading',
-      text: 'Metro Vancouver',
-    },
-    {
       type: 'paragraph',
       text: 'Within Metro Vancouver, RideNDine uses TransLink GTFS data to search real bus stops and train stations along your route. Restaurants are linked to actual transit stops, making it easier to see where to get off and grab food.',
     },
@@ -98,26 +87,11 @@ Support for additional transit systems is planned.`,
     },
     {
       type: 'heading',
-      text: 'Tech Stack',
-    },
-    {
-      type: 'bullets',
-      items: [
-        'Built with React, TypeScript, and Next.js.',
-        'Uses the Google Maps and Places APIs for routing and restaurant discovery.',
-        'Uses TransLink GTFS data to map restaurants to real transit stops in Metro Vancouver.',
-        'Falls back to route sampling for regions outside Metro Vancouver.',
-        'Deployed on Vercel with serverless APIs.',
-        'Implements caching and rate limiting to keep API usage sustainable.',
-      ],
-    },
-    {
-      type: 'heading',
       text: 'Usage Limits',
     },
     {
       type: 'paragraph',
-      text: 'RideNDine currently allows up to 5 route searches within any rolling 24-hour period to help keep the project sustainable.',
+      text: 'RideNDine currently allows up to 5 route searches within any rolling 24-hour period to help keep the project sustainable. Caching and rate limiting help keep API usage sustainable.',
     },
   ],
 }

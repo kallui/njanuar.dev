@@ -4,15 +4,20 @@ import type { PortfolioItem } from '../content'
 type WorkListProps = {
   items: PortfolioItem[]
   basePath: string
+  showYears?: boolean
 }
 
-export function WorkList({ items, basePath }: WorkListProps) {
+export function WorkList({
+  items,
+  basePath,
+  showYears = true,
+}: WorkListProps) {
   return (
     <div className="work-list">
       {items.map((item) => (
         <Link
           key={item.slug}
-          className="work-item"
+          className={showYears ? 'work-item' : 'work-item work-item--no-years'}
           to={`${basePath}/${item.slug}`}
         >
           <div className="work-company">
@@ -28,11 +33,13 @@ export function WorkList({ items, basePath }: WorkListProps) {
               <span key={role.title}>{role.title}</span>
             ))}
           </div>
-          <div className="work-years">
-            {item.roles.map((role) => (
-              <span key={role.years}>{role.years}</span>
-            ))}
-          </div>
+          {showYears && (
+            <div className="work-years">
+              {item.roles.map((role) => (
+                <span key={role.years}>{role.years}</span>
+              ))}
+            </div>
+          )}
         </Link>
       ))}
     </div>

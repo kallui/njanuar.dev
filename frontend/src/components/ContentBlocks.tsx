@@ -25,8 +25,10 @@ export function ContentBlocks({ blocks }: { blocks: ContentBlock[] }) {
     <div className="content-blocks">
       {blocks.map((block, index) => {
         switch (block.type) {
-          case 'heading':
-            return <h2 key={index}>{block.text}</h2>
+          case 'heading': {
+            const HeadingTag = block.level === 3 ? 'h3' : 'h2'
+            return <HeadingTag key={index}>{block.text}</HeadingTag>
+          }
           case 'paragraph':
             return block.text
               .split(/\n\s*\n/)
@@ -115,6 +117,12 @@ export function ContentBlocks({ blocks }: { blocks: ContentBlock[] }) {
                   {new URL(block.url).hostname}
                 </span>
               </a>
+            )
+          case 'pre':
+            return (
+              <pre key={index} className="detail-pre">
+                {block.text}
+              </pre>
             )
           case 'divider':
             return <hr key={index} className="detail-divider" />

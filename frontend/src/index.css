@@ -1,5 +1,6 @@
 :root {
   --text: rgb(176, 176, 176);
+  --text-m: rgb(210, 210, 212);
   --text-h: #f3f4f6;
   --link: rgba(255, 255, 255, 0.9);
   --bg: #0f0f0f;
@@ -62,8 +63,8 @@ header {
 
 header > h1 {
   margin: 0 0 12px;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 20px;
+  line-height: 28px;
 }
 
 .home-clock {
@@ -107,6 +108,8 @@ header > h1 {
 
 .detail-title h1 {
   margin: 0;
+  font-size: 20px;
+  line-height: 28px;
 }
 
 .detail-title-link {
@@ -141,7 +144,19 @@ header > h1 {
 }
 
 .detail-summary {
+  margin-bottom: 12px;
+}
+
+.detail-summary--solo {
   margin-bottom: 32px;
+}
+
+.detail-tech {
+  margin: 0 0 32px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text);
+  opacity: 0.7;
 }
 
 .detail-bullets {
@@ -151,25 +166,6 @@ header > h1 {
 
 .detail-bullets li + li {
   margin-top: 10px;
-}
-
-.devops-project-title {
-  color: var(--text-h);
-  font-size: 14px;
-  font-weight: 600;
-  margin: 20px 0 8px;
-}
-
-.devops-tech {
-  margin-top: 10px;
-  font-size: 12px;
-  line-height: 18px;
-  color: var(--text);
-  opacity: 0.7;
-}
-
-.devops-tech + .devops-project-title {
-  margin-top: 24px;
 }
 
 code {
@@ -186,7 +182,31 @@ code {
 }
 
 .content-blocks h2 {
-  margin-top: 32px;
+  margin-top: 36px;
+}
+
+.content-blocks h3 {
+  margin-top: 22px;
+  margin-bottom: 6px;
+  line-height: 22px;
+}
+
+.content-blocks h2 + h3 {
+  margin-top: 16px;
+}
+
+.detail-pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 18px;
+  white-space: pre;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
 }
 
 .detail-image {
@@ -279,16 +299,26 @@ code {
 
 h1 {
   color: var(--text-h);
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
+  line-height: 28px;
   margin: 0 0 12px;
 }
 
 h2 {
   color: var(--text-h);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  margin: 0 0 12px;
+}
+
+h3 {
+  color: var(--text-m);
   font-size: 14px;
   font-weight: 600;
-  margin: 0 0 12px;
+  line-height: 22px;
+  margin: 0 0 6px;
 }
 
 p {
@@ -365,6 +395,10 @@ section p + p {
   border-radius: 6px;
   color: inherit;
   text-decoration: none;
+}
+
+.work-item--no-years {
+  grid-template-columns: 130px 1fr;
 }
 
 .work-item:hover {

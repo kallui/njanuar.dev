@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { WorkList } from '../components/WorkList'
 import { VancouverClock } from '../components/VancouverClock'
-import { work, industryWork, projects } from '../content'
+import { work, featuredProjects, moreProjects } from '../content'
 import kikiLogo from '../assets/pictures/kiki_logo.svg'
 
 export function Home() {
@@ -20,8 +20,12 @@ export function Home() {
       </header>
 
       <section>
-        <h2>Industry Project</h2>
-        <WorkList items={industryWork} basePath="/industry" />
+        <h2>Featured Projects</h2>
+        <WorkList
+          items={featuredProjects}
+          basePath="/projects"
+          showYears={false}
+        />
       </section>
 
       <section>
@@ -30,16 +34,17 @@ export function Home() {
       </section>
 
       <section>
-        <h2>Featured Projects</h2>
-        <WorkList items={projects} basePath="/projects" />
+        <h2>More Projects</h2>
+        <WorkList
+          items={moreProjects}
+          basePath="/projects"
+          showYears={false}
+        />
       </section>
 
       <section>
-        <h2>Now</h2>
-        <p>Currently learning about DevOps and cloud.</p>
-        <Link to="/devops" className="doodle-cta">
-          Read more →
-        </Link>
+        <h2>Certifications</h2>
+        <p>AWS Certified Cloud Practitioner</p>
       </section>
 
       <section>

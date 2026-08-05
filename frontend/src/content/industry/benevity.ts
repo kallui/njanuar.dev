@@ -11,13 +11,15 @@ export const benevity: PortfolioItem = {
   url: 'https://www.benevity.com',
   roles: [
     {
-      title: 'Multi-Agent Impact Story Generation Platform',
+      title: 'Multi-agent AI platform',
       years: '2026',
       dates: 'Jan - Apr 2026',
     },
   ],
+  summary:
+    'A multi-agent AI platform that generates and distributes impact stories so donors stay connected to the real-world outcomes of their contributions.',
+  tech: 'Google ADK · Vertex AI · Gemini · Cloud Run · Cloud SQL · Firebase · Docker · GitHub Actions · PostgreSQL',
   content: [
-    { type: 'video', src: demoVideo },
     {
       type: 'paragraph',
       text: 'I worked with a team of 5 to build a multi-agent impact story generation platform for [Benevity](https://www.benevity.com), a company focused on helping organizations create social impact. The project aimed to address a challenge: donors often lose visibility into how their contributions create real-world impact after making a donation. To solve this, we built a platform that fetches news, generates impact stories, and distributes them to donors, allowing them to stay connected with the causes they support.',
@@ -29,9 +31,8 @@ export const benevity: PortfolioItem = {
     {
       type: 'bullets',
       items: [
-        'AI workflow design',
+        'AI workflow design and multi-agent orchestration',
         'Prompt engineering',
-        'Multi-agent orchestration',
         'DevOps & deployment',
       ],
     },
@@ -40,17 +41,16 @@ export const benevity: PortfolioItem = {
       text: 'AI Multi-Agent Story Generation Workflow',
     },
     {
+      type: 'paragraph',
+      text: `Designed and implemented an AI multi-agent workflow using Google ADK and Vertex AI to automate nonprofit impact story generation. The pipeline orchestrates four Gemini agents for RAG retrieval, grounded research, story generation, and fact validation.
+
+To improve reliability and reduce hallucinations, I implemented a validation loop where generated stories are checked against retrieved sources and stored facts. The QA agent can identify issues and trigger revisions from the Writer agent before final output.`,
+    },
+    {
       type: 'image',
       src: diagram,
       alt: 'AI multi-agent story generation workflow with QA feedback loops',
-    },
-    {
-      type: 'paragraph',
-      text: `One of my main responsibilities was designing and implementing the AI multi-agent workflow used to generate impact stories. I built the multi-agent pipeline using Google ADK and Vertex AI, orchestrating four Gemini agents responsible for RAG retrieval, grounded research, story generation, and fact validation.
-
-The RAG agent extracts relevant information from nonprofit reports, while the Research agent gathers recent updates from external sources such as articles and organization websites. Both agents retrieve information relevant to the selected nonprofit and store key facts and source references as news items in the database.
-
-Since AI-generated content can sometimes contain hallucinations, I designed the workflow so that the QA agent validates story drafts against the stored news and facts in our database. If hallucinations or other writing issues are detected, the QA agent can reject the story, triggering a loop in the pipeline and asking the Writer agent to revise it.`,
+      caption: 'AI multi-agent story generation workflow with QA feedback loops',
     },
     {
       type: 'heading',
@@ -69,10 +69,19 @@ Since AI-generated content can sometimes contain hallucinations, I designed the 
       text: 'After generation, stories go through a review process before reaching donors. Benevity employees and nonprofit organizations can review, edit, and approve generated stories. Once approved, users can distribute the impact stories as customized emails using SMTP delivery.',
     },
     {
+      type: 'paragraph',
+      text: 'Below is an example of the impact story email that gets sent to donors after a story is approved.',
+    },
+    {
       type: 'image',
       src: impactStory,
-      alt: 'Example impact story email',
+      alt: 'Example impact story email sent to donors',
     },
+    {
+      type: 'heading',
+      text: 'Demo Video',
+    },
+    { type: 'video', src: demoVideo },
     {
       type: 'heading',
       text: 'DevOps & Deployment',
@@ -88,18 +97,6 @@ Since AI-generated content can sometimes contain hallucinations, I designed the 
         'Deployed the PostgreSQL database using Google Cloud SQL.',
         'Containerized the project using Docker.',
         'Implemented GitHub Actions CI/CD pipelines for automated testing and deployments.',
-      ],
-    },
-    { type: 'divider' },
-    {
-      type: 'heading',
-      text: 'TL;DR',
-    },
-    {
-      type: 'bullets',
-      items: [
-        'Designed a multi-agent AI workflow using Google ADK and Vertex AI for impact story generation.',
-        "Led the team's DevOps efforts, handling deployments and automated testing using Google Cloud Run, Cloud SQL, Firebase Hosting, Docker, and GitHub Actions.",
       ],
     },
   ],

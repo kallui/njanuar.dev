@@ -1,10 +1,12 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { allItems } from '../content'
 import { ContentBlocks } from '../components/ContentBlocks'
 
 export function DetailPage() {
   const { slug } = useParams()
+  const { pathname } = useLocation()
   const item = allItems.find((entry) => entry.slug === slug)
+  const isWork = pathname.startsWith('/work/')
 
   if (!item) {
     return (
@@ -16,6 +18,10 @@ export function DetailPage() {
       </main>
     )
   }
+
+  const headerRoles = item.roles.filter((role) =>
+    isWork ? role.title || role.dates : role.dates,
+  )
 
   return (
     <main>
@@ -39,13 +45,19 @@ export function DetailPage() {
             <h1>{item.name}</h1>
           )}
         </div>
-        {item.roles.length === 1 && (
+        {headerRoles.length > 0 && (
           <div className="detail-roles">
-            {item.roles.map((role) => (
+            {headerRoles.map((role) => (
               <p key={`${role.title}-${role.dates}`}>
-                {role.title}
-                {role.dates && (
-                  <span className="detail-years"> · {role.dates}</span>
+                {isWork ? (
+                  <>
+                    {role.title}
+                    {role.dates && (
+                      <span className="detail-years"> · {role.dates}</span>
+                    )}
+                  </>
+                ) : (
+                  role.dates
                 )}
               </p>
             ))}
@@ -53,7 +65,16 @@ export function DetailPage() {
         )}
       </header>
 
-      {item.summary && <p className="detail-summary">{item.summary}</p>}
+      {item.summary && (
+        <p
+          className={
+            item.tech ? 'detail-summary' : 'detail-summary detail-summary--solo'
+          }
+        >
+          {item.summary}
+        </p>
+      )}
+      {item.tech && <p className="detail-tech">{item.tech}</p>}
       {item.content && <ContentBlocks blocks={item.content} />}
     </main>
   )

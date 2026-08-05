@@ -19,10 +19,13 @@ export const worksafebc: PortfolioItem = {
       dates: 'Sep - Dec 2024',
     },
   ],
+  summary:
+    'Two co-op terms at WorkSafeBC — most recently in Common Engineering improving developer experience, and earlier in QA on the claim management system.',
+  tech: 'Angular · .NET · GitHub Copilot · CI/CD · QA Testing',
   content: [
     {
       type: 'heading',
-      text: 'Software Developer Co-op · Sep - Dec 2025',
+      text: 'Software Developer Co-op',
     },
     {
       type: 'paragraph',
@@ -36,7 +39,6 @@ export const worksafebc: PortfolioItem = {
       type: 'paragraph',
       text: 'One of the main projects was improving the adoption of GitHub Copilot within the organization. Since AI-generated code did not consistently follow internal coding standards, I explored different approaches and implemented custom GitHub Copilot instruction files for Angular development. I integrated these instructions into the standardized Angular application blueprint, so developers creating a new Angular project would have these instruction files ready to use. I presented a demo to stakeholders while answering questions and gathering feedback.',
     },
-
     {
       type: 'paragraph',
       text: "Here's a link to the blog post I wrote about the project:",
@@ -64,17 +66,23 @@ export const worksafebc: PortfolioItem = {
       text: 'Outside of larger projects, I contributed to the team’s day-to-day engineering work by taking tickets related to CI/CD pipeline improvements. This involved troubleshooting missing configurations and supporting the release of updated Angular and .NET application blueprints.',
     },
     {
+      type: 'heading',
+      text: 'A Parting Gift',
+    },
+    {
+      type: 'paragraph',
+      text: "Before I left the Common Engineering team, I wanted to leave them with a physical reminder of my favorite debugging tip: if you're ever stuck, talk it out like you would with a rubber duck. I created a rubber duck model but DevOps themed and 3D-printed it, and gave it to the team.",
+    },
+    {
       type: 'image',
       src: devopsDuck,
-      alt: '3D-printed DevOps rubber duck',
-      caption:
-        'A 3D-printed rubber duck debugging companion — but this one joined the DevOps team.',
+      alt: '3D-printed DevOps rubber duck given to the Common Engineering team',
       size: 'sm',
     },
     { type: 'divider' },
     {
       type: 'heading',
-      text: 'Quality Assurance Co-op · Sep - Dec 2024',
+      text: 'Quality Assurance Co-op',
     },
     {
       type: 'paragraph',
@@ -95,23 +103,6 @@ export const worksafebc: PortfolioItem = {
     {
       type: 'paragraph',
       text: 'I also had the opportunity to present a live demo of our team’s new solution to over 100 internal stakeholders, explaining the changes and improvements compared to the previous implementation.',
-    },
-    { type: 'divider' },
-    {
-      type: 'heading',
-      text: 'TL;DR',
-    },
-    {
-      type: 'bullets',
-      items: [
-        'Built custom GitHub Copilot instructions for Angular applications.',
-        'Led a dependency tracking initiative from research to recommendation.',
-        'Helped maintain CI/CD pipelines and blueprint releases.',
-        'Tested features for WorkSafeBC’s core claim management application.',
-        'Designed and executed 75+ test cases.',
-        'Identified and tracked 10+ defects before release.',
-        'Presented a feature demo to 100+ internal stakeholders.',
-      ],
     },
   ],
 }

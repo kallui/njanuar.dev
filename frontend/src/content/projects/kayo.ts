@@ -16,12 +16,9 @@ export const kayo: PortfolioItem = {
     },
   ],
   summary:
-    'NwHacks 2024 Hackathon Honorable Mention (2nd Place) Winning Project',
+    'A laptop-camera app that watches your belongings with object detection and texts you if anything goes missing. Built at nwHacks 2024, where it earned Honorable Mention (2nd Place).',
+  tech: 'YOLOv8 · Twilio',
   content: [
-    {
-      type: 'video',
-      src: demoVideo,
-    },
     {
       type: 'paragraph',
       text: 'Leaving your stuff unattended at a cafe or library? [KAY/O](https://github.com/kallui/kayo) watches it for you using just your laptop camera and object recognition to alert you if anything goes missing.',
@@ -37,6 +34,14 @@ export const kayo: PortfolioItem = {
         'Crash Detection: The system includes a crash detection server to avoid thieves closing the application, or shutting down the laptop.',
         'Alerts via Twilio: Set up Twilio environment variables to receive text alerts straight to your phone.',
       ],
+    },
+    {
+      type: 'heading',
+      text: 'Demo Video',
+    },
+    {
+      type: 'video',
+      src: demoVideo,
     },
     {
       type: 'link',
