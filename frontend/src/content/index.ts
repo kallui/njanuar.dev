@@ -13,15 +13,12 @@ export type { PortfolioItem } from './types'
 
 export const work: PortfolioItem[] = [worksafebc, genxys, greenline]
 export const featuredProjects: PortfolioItem[] = [
+  ridendine,
   drawTogether,
   benevity,
-  ridendine,
-]
-export const moreProjects: PortfolioItem[] = [
-  kayo,
   portfolioInfra,
-  bashScripts,
 ]
+export const moreProjects: PortfolioItem[] = [kayo, bashScripts]
 
 export const allItems: PortfolioItem[] = [
   ...work,
