@@ -88,7 +88,7 @@ export function CursorLayer() {
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Fat symmetric dart — tip top-left, wide wings (closer to reference) */}
+              {/* Fat symmetric dart - tip top-left, wide wings (closer to reference) */}
               <path
                 d="M1 1 L4.2 17.5 L7.6 7.6 L17.5 4.2 Z"
                 fill={cursor.color}

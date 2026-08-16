@@ -69,7 +69,7 @@ export function loadOrCreateGuest(): Guest {
       }
     }
   } catch {
-    // Corrupt storage — fall through and create fresh.
+    // Corrupt storage - fall through and create fresh.
   }
 
   const guest = createGuest()

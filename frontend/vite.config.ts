@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// GitHub Pages serves 404.html for unknown paths — copy index so SPA routes work.
+// GitHub Pages serves 404.html for unknown paths - copy index so SPA routes work.
 function spaFallback() {
   return {
     name: 'spa-fallback',

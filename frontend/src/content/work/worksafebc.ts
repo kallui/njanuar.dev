@@ -20,7 +20,7 @@ export const worksafebc: PortfolioItem = {
     },
   ],
   summary:
-    'Two co-op terms at WorkSafeBC — most recently in Common Engineering improving developer experience, and earlier in QA on the claim management system.',
+    'Two co-op terms at WorkSafeBC, most recently in Common Engineering improving developer experience, and earlier in QA on the claim management system.',
   tech: 'Angular · .NET · GitHub Copilot · CI/CD · QA Testing',
   content: [
     {

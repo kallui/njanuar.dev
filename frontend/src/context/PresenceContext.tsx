@@ -25,7 +25,7 @@ export type PeerCursor = {
   id: string
   displayName: string
   color: string
-  x: number // 0–1 viewport-normalized
+  x: number // 0-1 viewport-normalized
   y: number
   updatedAt: number
 }
@@ -261,7 +261,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!helloSentRef.current) return
     send({ type: 'page', page: currentPage })
-    // Clear cursors when navigating — peer positions are stale
+    // Clear cursors when navigating - peer positions are stale
     setCursors([])
   }, [currentPage, send])
 
