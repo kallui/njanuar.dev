@@ -25,6 +25,7 @@ export const kayo: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Features',
     },
     {
@@ -37,6 +38,7 @@ export const kayo: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Demo Video',
     },
     {

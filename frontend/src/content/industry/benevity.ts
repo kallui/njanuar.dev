@@ -26,6 +26,7 @@ export const benevity: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'My role',
     },
     {
@@ -38,6 +39,7 @@ export const benevity: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'AI Multi-Agent Story Generation Workflow',
     },
     {
@@ -54,6 +56,7 @@ To improve reliability and reduce hallucinations, I implemented a validation loo
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Scheduled News Fetching',
     },
     {
@@ -62,6 +65,7 @@ To improve reliability and reduce hallucinations, I implemented a validation loo
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Review & Distribution Workflow',
     },
     {
@@ -79,11 +83,13 @@ To improve reliability and reduce hallucinations, I implemented a validation loo
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Demo Video',
     },
     { type: 'video', src: demoVideo },
     {
       type: 'heading',
+      level: 2,
       text: 'DevOps & Deployment',
     },
     {

@@ -19,6 +19,7 @@ export const greenline: PortfolioItem = {
   content: [
     {
       type: 'heading',
+      level: 2,
       text: 'Feature Development & Collaboration',
     },
     {
@@ -27,6 +28,7 @@ export const greenline: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'End-to-End Project',
     },
     {

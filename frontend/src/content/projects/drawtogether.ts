@@ -22,6 +22,7 @@ export const drawTogether: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Demo Video',
     },
     {
@@ -30,6 +31,7 @@ export const drawTogether: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'AWS Architecture Diagram',
     },
     {
@@ -38,6 +40,7 @@ export const drawTogether: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Application Overview',
     },
     {
@@ -68,6 +71,7 @@ export const drawTogether: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'AWS Infrastructure',
     },
     {
@@ -98,6 +102,7 @@ export const drawTogether: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'CI/CD & Deployment',
     },
     {
@@ -124,6 +129,7 @@ export const drawTogether: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Security & Cost Optimization',
     },
     {
@@ -150,6 +156,7 @@ export const drawTogether: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Project Status',
     },
     {

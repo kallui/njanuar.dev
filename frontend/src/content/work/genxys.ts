@@ -19,6 +19,7 @@ export const genxys: PortfolioItem = {
   content: [
     {
       type: 'heading',
+      level: 2,
       text: 'Pharmacogenetic Data Processing',
     },
     {
@@ -27,6 +28,7 @@ export const genxys: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Testing, Validation & Data Access',
     },
     {
@@ -35,6 +37,7 @@ export const genxys: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Client Data Formatting App',
     },
     {

@@ -25,6 +25,7 @@ export const worksafebc: PortfolioItem = {
   content: [
     {
       type: 'heading',
+      level: 2,
       text: 'Software Developer Co-op',
     },
     {
@@ -33,6 +34,7 @@ export const worksafebc: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 3,
       text: 'GitHub Copilot Instructions',
     },
     {
@@ -51,6 +53,7 @@ export const worksafebc: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 3,
       text: 'Dependency Tracking',
     },
     {
@@ -59,6 +62,7 @@ export const worksafebc: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 3,
       text: 'CI/CD & Blueprints',
     },
     {
@@ -67,6 +71,7 @@ export const worksafebc: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 3,
       text: 'A Parting Gift',
     },
     {
@@ -82,6 +87,7 @@ export const worksafebc: PortfolioItem = {
     { type: 'divider' },
     {
       type: 'heading',
+      level: 2,
       text: 'Quality Assurance Co-op',
     },
     {
@@ -90,6 +96,7 @@ export const worksafebc: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 3,
       text: 'Testing & Defect Tracking',
     },
     {
@@ -98,6 +105,7 @@ export const worksafebc: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 3,
       text: 'Stakeholder Demo',
     },
     {

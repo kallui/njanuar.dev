@@ -18,6 +18,7 @@ export const portfolioInfra: PortfolioItem = {
   content: [
     {
       type: 'heading',
+      level: 2,
       text: 'Linux Server & Infrastructure',
     },
     {
@@ -31,6 +32,7 @@ export const portfolioInfra: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Networking & Web Server',
     },
     {
@@ -44,6 +46,7 @@ export const portfolioInfra: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'CI/CD & Deployment',
     },
     {
@@ -56,6 +59,7 @@ export const portfolioInfra: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Architecture',
     },
     {

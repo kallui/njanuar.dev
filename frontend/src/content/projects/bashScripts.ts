@@ -17,6 +17,7 @@ export const bashScripts: PortfolioItem = {
   content: [
     {
       type: 'heading',
+      level: 2,
       text: 'Linux Server Monitoring Toolkit',
     },
     {
@@ -29,6 +30,7 @@ export const bashScripts: PortfolioItem = {
     },
     {
       type: 'heading',
+      level: 2,
       text: 'Nginx Access Log Analyzer',
     },
     {
