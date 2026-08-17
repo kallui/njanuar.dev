@@ -51,34 +51,34 @@ The application takes a user's origin and destination, determines their public t
     },
     {
       type: 'paragraph',
-      text: 'Choose a starting point and destination.',
+      text: 'Enter your starting point and destination to plan your trip.',
     },
     {
       type: 'heading',
       level: 3,
-      text: '2. Choose a transit route',
+      text: '2. Pick your route',
     },
     {
       type: 'paragraph',
-      text: 'RideNDine uses public transit data to determine the stops and path associated with the selected route.',
+      text: 'Choose the transit option that works best for you.',
     },
     {
       type: 'heading',
       level: 3,
-      text: '3. Find restaurants along the way',
+      text: '3. Explore food options along the way',
     },
     {
       type: 'paragraph',
-      text: 'The application searches for restaurants near the transit journey and ranks them based on their proximity to the route.',
+      text: 'RideNDine finds restaurants within a ~5-minute walk of your transit path. Search by restaurant name, and tap the restaurant cards or markers on the map for details.',
     },
     {
       type: 'heading',
       level: 3,
-      text: '4. Continue your trip',
+      text: '4. Open in your maps app',
     },
     {
       type: 'paragraph',
-      text: 'Open a restaurant directly in your preferred maps application for navigation.',
+      text: 'Found somewhere you like? Open it directly in your preferred maps app for walking directions and navigation.',
     },
     {
       type: 'heading',
