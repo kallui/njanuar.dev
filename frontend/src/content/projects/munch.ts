@@ -4,6 +4,7 @@ import scrollGif from '../../assets/pictures/munch_scroll.gif'
 import dragGif from '../../assets/pictures/munch_drag.gif'
 import keyboardGif from '../../assets/pictures/munch_keyboard.gif'
 import osuGif from '../../assets/pictures/munch_osu.gif'
+import appPreview from '../../assets/pictures/munch_app_preview.png'
 import gesturesCheatSheet from '../../assets/pictures/munch_gestures_cheatsheet.jpg'
 import type { PortfolioItem } from '../types'
 
@@ -26,6 +27,12 @@ export const munch: PortfolioItem = {
     {
       type: 'paragraph',
       text: '[Download MUNCH →](https://github.com/kallui/munch/releases/latest)',
+    },
+    {
+      type: 'image',
+      src: appPreview,
+      alt: 'MUNCH app window tracking a hand in standby',
+      size: 'sm',
     },
     {
       type: 'heading',
