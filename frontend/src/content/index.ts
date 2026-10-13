@@ -8,6 +8,10 @@ import { ridendine } from './projects/ridendine'
 import { kayo } from './projects/kayo'
 import { portfolioInfra } from './projects/portfolioInfra'
 import { bashScripts } from './projects/bashScripts'
+import { insightUbc } from './projects/insightUbc'
+import { munch } from './projects/munch'
+import { visto } from './projects/visto'
+import { anotherTuesday } from './projects/anotherTuesday'
 
 export type { PortfolioItem } from './types'
 
@@ -17,8 +21,15 @@ export const featuredProjects: PortfolioItem[] = [
   drawTogether,
   benevity,
   portfolioInfra,
+  insightUbc,
 ]
-export const moreProjects: PortfolioItem[] = [kayo, bashScripts]
+export const moreProjects: PortfolioItem[] = [
+  munch,
+  kayo,
+  anotherTuesday,
+  visto,
+  bashScripts,
+]
 
 export const allItems: PortfolioItem[] = [
   ...work,

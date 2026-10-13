@@ -58,6 +58,7 @@ function renderBlock(block: ContentBlock, index: number): ReactNode {
             className="detail-image"
             src={block.src}
             alt={block.alt ?? ''}
+            loading="lazy"
           />
           {block.caption && (
             <figcaption className="detail-caption">{block.caption}</figcaption>
@@ -73,6 +74,7 @@ function renderBlock(block: ContentBlock, index: number): ReactNode {
                 className="detail-image"
                 src={image.src}
                 alt={image.alt ?? ''}
+                loading="lazy"
               />
               {image.caption && (
                 <figcaption className="detail-caption">
