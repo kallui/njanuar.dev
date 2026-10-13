@@ -2,6 +2,7 @@ import { copyFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { markdownContent } from './plugins/markdownContent.ts'
 
 // GitHub Pages serves 404.html for unknown paths - copy index so SPA routes work.
 function spaFallback() {
@@ -16,5 +17,5 @@ function spaFallback() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), spaFallback()],
+  plugins: [markdownContent(), react(), spaFallback()],
 })
